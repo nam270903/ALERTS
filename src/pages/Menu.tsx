@@ -8,7 +8,8 @@ import {
     IonMenu,
     IonRouterOutlet,
     IonMenuToggle,
-    IonItem
+    IonItem,
+    IonButton
 } from '@ionic/react'
 import { Redirect, Route } from 'react-router'
 import Notification from './Notification'
@@ -40,12 +41,18 @@ const Menu: React.FC = () => {
                         </IonItem>
                     </IonMenuToggle> 
                 ))}
+
+                <IonButton 
+                    routerLink='/' 
+                    routerDirection='back' 
+                    expand='full'> Sign out </IonButton>
+                    
                </IonContent>
             </IonMenu>
 
             <IonRouterOutlet id='main'>
-            <Route exact path="/app/Notification" component={Notification}/>
-            <Route exact path="/app/Dashboard" component={Dashboard}/>
+                <Route exact path="/app/Notification" component={Notification}/>
+                <Route exact path="/app/Dashboard" component={Dashboard}/>
                     <Redirect to="/app/Notification"/>
             </IonRouterOutlet>
         </IonSplitPane>

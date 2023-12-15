@@ -17,29 +17,36 @@ import '@capacitor/push-notifications'
 import React, {useEffect, useState} from 'react'
 import sendTelegramNotification from '../components/TelegramNoti'
 
-const Notification: React.FC = () => {
-    const handleSendNotification = () => {
-        sendTelegramNotification('This is where they attack us');
-      };
-    
-    const [items, setItems] = useState<string[]>([]);
-    
-    const generateItems = () => {
-        const newItems = [];
-        for (let i = 0; i < 51; i++) {
-            newItems.push(`Item ${1 + items.length + i}`);
-        }
-        setItems([...items, ...newItems]);
-    };
-
-    useEffect(() => {
-        generateItems();
-      }, []);
-
+const NotificationItem: React.FC<{ item: string; onClick: () => void }> = ({ item, onClick }) => {
     return (
-        <IonPage>
-
-            <IonHeader>
+      <IonItem button onClick={onClick}>
+        <IonLabel>{item}</IonLabel>
+      </IonItem>
+    );
+  };
+  
+  const Notification: React.FC = () => {
+    const [items, setItems] = useState<string[]>([]);
+  
+    const generateItems = () => {
+      const newItems = [];
+      for (let i = 0; i < 51; i++) {
+        newItems.push(`Item ${1 + items.length + i}`);
+      }
+      setItems([...items, ...newItems]);
+    };
+  
+    const handleSendNotification = (item: string) => {
+      sendTelegramNotification(`${item}`);
+    };
+  
+    useEffect(() => {
+      generateItems();
+    }, []);
+  
+    return (
+      <IonPage>
+        <IonHeader>
                 <IonToolbar>
                     <IonButtons slot='start'>
                         <IonMenuButton></IonMenuButton>
@@ -47,28 +54,25 @@ const Notification: React.FC = () => {
                     <IonTitle>Notifications</IonTitle>
                 </IonToolbar>
             </IonHeader>
-
-            <IonContent class='ion-text-center' >
-                <div>
-                    <h1>ALERTS!</h1>
-                <IonButton onClick={handleSendNotification}>Send me to Application</IonButton>
-                </div>
-
-                <IonList>
-                    {items.map((item, index) => (
-                        <IonItem key={item}>
-                            <IonLabel>{item}</IonLabel>
-                        </IonItem>
-                    ))}
-                </IonList>
-
-                <IonInfiniteScroll>
-                    <IonInfiniteScrollContent loadingText="Please wait..." loadingSpinner="bubbles"></IonInfiniteScrollContent>
-                </IonInfiniteScroll>
-            </IonContent>
-
-        </IonPage>
-    )
-}
-
-export default Notification
+  
+        <IonContent class='ion-text-center'>
+          <div>
+            <h1>ALERTS!</h1>
+          </div>
+  
+          <IonList>
+            {items.map((item, index) => (
+              <NotificationItem key={item} item={item} onClick={() => handleSendNotification(item)} />
+            ))}
+          </IonList>
+  
+          <IonInfiniteScroll>
+            <IonInfiniteScrollContent loadingText='Please wait...' loadingSpinner='bubbles'></IonInfiniteScrollContent>
+          </IonInfiniteScroll>
+        </IonContent>
+      </IonPage>
+    );
+  };
+  
+  export default Notification;
+  
