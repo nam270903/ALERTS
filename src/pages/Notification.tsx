@@ -13,16 +13,11 @@ import {
   IonRefresher,
   IonRefresherContent,
 } from '@ionic/react';
-import '@capacitor/push-notifications';
-import sendTelegramNotification from '../components/TelegramNoti';
 
 const NotificationItem: React.FC<{ item: string; onClick: () => void; hasNewNotification: boolean }> = ({ item, onClick, hasNewNotification }) => {
- 
-    return (
+  return (
     <IonItem button onClick={onClick}>
-      
       <IonLabel>{item}</IonLabel>
-      
       {hasNewNotification && (
         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: '8px' }}>
           <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'blue' }}></div>
@@ -35,16 +30,26 @@ const NotificationItem: React.FC<{ item: string; onClick: () => void; hasNewNoti
 const Notification: React.FC = () => {
   const [items, setItems] = useState<{ text: string; hasNewNotification: boolean }[]>([]);
 
-  const generateItems = () => {
-    const newItems = [];
-    for (let i = 0; i < 5; i++) {
-      newItems.push({ text: `Item ${1 + items.length + i}`, hasNewNotification: true });
-    }
-    setItems([...items, ...newItems]);
-  };
+  const fetchAlerts = async () => {
+    try {
+      const response = await fetch('https://chouette.doclai.com/alerts', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Basic ' + btoa('nam-vu-tue:QtsUj9My:SvZ3R5'),
+        },
+      });
 
-  const handleSendNotification = (item: { text: string; hasNewNotification: boolean }) => {
-    sendTelegramNotification(`${item.text}`);
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Fetched alerts:', data);
+        setItems(data.map((alert: any) => ({ text: alert.message, hasNewNotification: true })));
+      } else {
+        console.error('Failed to fetch alerts:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching alerts:', error.message);
+    }
   };
 
   const handleItemClick = (index: number) => {
@@ -55,18 +60,13 @@ const Notification: React.FC = () => {
 
   const doRefresh = (event: CustomEvent) => {
     setTimeout(() => {
-      const newItems = [];
-      for (let i = 0; i < 5; i++) {
-        newItems.push({ text: `Item ${1 + items.length + i}`, hasNewNotification: true });
-      }
-
-      setItems([...newItems, ...items]);
-      event.detail.complete(); // Hide the refresher
+      fetchAlerts();
+      event.detail.complete();
     }, 1000);
   };
 
   useEffect(() => {
-    generateItems();
+    fetchAlerts(); 
   }, []);
 
   return (
@@ -95,10 +95,7 @@ const Notification: React.FC = () => {
               key={item.text}
               item={item.text}
               hasNewNotification={item.hasNewNotification}
-              onClick={() => {
-                handleItemClick(index);
-                handleSendNotification(item);
-              }}
+              onClick={() => handleItemClick(index)}
             />
           ))}
         </IonList>

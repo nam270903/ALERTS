@@ -17,7 +17,7 @@ const Dashboard: React.FC = () => {
                 <IonButtons slot='start'>
                         <IonMenuButton></IonMenuButton>
                 </IonButtons>
-                    <IonTitle>Dashboard</IonTitle>
+                <IonTitle>Dashboard</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent className='ion-padding'></IonContent>

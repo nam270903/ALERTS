@@ -36,7 +36,9 @@ import {
     };
   
     return (
+
       <IonPage>
+
         <IonHeader>
           <IonToolbar>
             <IonTitle className='ion-text-center'>Log in</IonTitle>
@@ -44,20 +46,24 @@ import {
         </IonHeader>
   
         <IonContent className='ion-padding ion-text-center'>
+          
           <IonItem>
             <IonLabel position='floating'>Username</IonLabel>
             <IonInput type='text' value={username} onIonChange={(e) => setUsername(e.detail.value!)} />
           </IonItem>
+          
           <IonItem className='ion-align-items-center'>
             <IonLabel position='floating'>Password</IonLabel>
             <IonInput type={showPassword ? 'text' : 'password'} value={password} onIonChange={(e) => setPassword(e.detail.value!)} />
+            
             <IonButton slot='end' onClick={() => setShowPassword(!showPassword)}>
               <IonIcon icon={showPassword ? eye : eyeOff} />
             </IonButton>
+            
           </IonItem>
   
           <div style={{ marginTop: '10px' }}>
-            <IonButton onClick={doLogin} color='primary' style={{ color: '#ffffff' }}>
+            <IonButton onClick={doLogin} color='primary' style={{ color: '#000000' }}>
               Log in
             </IonButton>
           </div>
