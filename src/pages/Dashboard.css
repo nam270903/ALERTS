@@ -1,0 +1,9 @@
+.search-and-filter {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .filter-container {
+    display: flex;
+    align-items: center;
+  }
