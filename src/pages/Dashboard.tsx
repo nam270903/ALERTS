@@ -55,21 +55,27 @@ const Dashboard: React.FC = () => {
   };
 
   useEffect(() => {
+    // Simulating fetching JWT token (replace this with your actual logic)
     const fetchJwtToken = async () => {
-      const options = {
+      const form = new FormData();
+      form.append("username", "admin");
+      form.append("password", "admin");
+
+
+      const options: RequestInit = {
         method: 'POST',
-        headers: {
-          'User-Agent': 'insomnia/8.4.5',
-          Authorization: 'Basic YXBpLXVzZXI6dkpwLXBzSEtMbVFOWG1TM19qN2U='
-        }
+        redirect: 'follow',
+        body:form
       };
 
       try {
-        const response = await fetch('https://chouette.doclai.com/security/user/authenticate', options);
+        const response = await fetch('https://chouette.doclai.com/login', options);
         const data = await response.json();
 
-        if (data && data.data && data.data.token) {
-          setJwtToken(data.data.token);
+        console.log(data);
+
+        if (data && data.token) {
+          setJwtToken(data.token);
         }
       } catch (error) {
         console.error(error);
@@ -86,7 +92,7 @@ const Dashboard: React.FC = () => {
         method: 'GET',
         headers: {
           'User-Agent': 'insomnia/8.4.5',
-          Authorization: 'Basic YXBpLXVzZXI6dkpwLXBzSEtMbVFOWG1TM19qN2U='
+          Authorization: 'Bearer ${jwtToken}'
         }
       };
 
@@ -114,7 +120,7 @@ const Dashboard: React.FC = () => {
 
       const ListAgents = async () => {
         try {
-          const response = await fetch('https://chouette.doclai.com/agents', options);
+          const response = await fetch('https://chouette.doclai.com/auth/agents', options);
           const data = await response.json();
           console.log(data);
           const extractedAgents: Agent[] = data.data.affected_items.map((item: any) => ({
@@ -134,7 +140,7 @@ const Dashboard: React.FC = () => {
 
       const AgentsStatus = async () => {
         try {
-          const response = await fetch('https://chouette.doclai.com/agents/summary/status', options);
+          const response = await fetch('https://chouette.doclai.com/auth/agents/summary/status', options);
           const data = await response.json();
           console.log(data);
           if (data && data.data) {
