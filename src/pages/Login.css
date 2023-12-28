@@ -1,0 +1,30 @@
+body, html {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .login-box {
+    background-color: #fff;
+    padding: 20px; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%; 
+    max-width: 500px; 
+    margin: auto; 
+  }
+
+  .app-name-box {
+    background-color: #ffff; 
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: #000000; 
+    margin-bottom: 20px; 
+  }

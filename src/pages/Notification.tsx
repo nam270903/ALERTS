@@ -48,7 +48,7 @@ const Notification: React.FC = () => {
         console.error('Failed to fetch alerts:', response.statusText);
       }
     } catch (error) {
-      console.error('Error fetching alerts:', error.message);
+      console.error('Error fetching alerts:', error);
     }
   };
 

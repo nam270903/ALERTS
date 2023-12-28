@@ -1,0 +1,23 @@
+ADD (DONE) AT THE END WHENEVER WORKS ARE DONE !!!
+
+* DASHBOARD
+ - Draw pie chart show statistic
+ - Add filter parent value:{ID, Platform, Cluster Node, Status}
+ - Make detailed page (Child page)
+    + Show information about agent when click on agent
+    + Add Menu button allowing child page come back to menu.
+    + Add Back button allowing child page come back to parent page. 
+ - CLear filter function inside of filter 
+ - Add icon for platform (Window, Linux, Ios, Ubuntu)
+
+* MENU
+ -
+
+* LOGIN
+ -
+
+* NOTIFICATION
+ -
+
+* WELCOME PAGE
+ - 
