@@ -196,7 +196,7 @@ const Dashboard: React.FC = () => {
               </IonRow>
               <IonRow>
                 <IonCol>
-                  <IonLabel>Never Connected:</IonLabel>
+                  <IonLabel>Never Connected</IonLabel>
                   <IonBadge color="warning">{neverconnectedAgents}</IonBadge>
                 </IonCol>
                 <IonCol>
@@ -225,7 +225,7 @@ const Dashboard: React.FC = () => {
             <IonCol size="4" className="ion-text-end">
               <IonSelect
                 value={statusFilter}
-                placeholder="Filter"
+                placeholder="Filter by Status"
                 onIonChange={(e) => setStatusFilter(e.detail.value)}
                 className="status-filter"
               >
