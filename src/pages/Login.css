@@ -1,8 +1,3 @@
-body, html {
-    margin: 0;
-    padding: 0;
-  }
-  
   .login-container {
     display: flex;
     align-items: center;
@@ -27,4 +22,13 @@ body, html {
     text-align: center;
     color: #000000; 
     margin-bottom: 20px; 
+  }
+
+  .logo-box {
+    text-align: center;
+    margin-top: 20px; 
+  }
+  
+  .logo-box img {
+    max-width: 100%;
   }
