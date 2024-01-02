@@ -15,6 +15,8 @@ import {
 import { Redirect, Route } from 'react-router';
 import Notification from './Notification';
 import Dashboard from './Dashboard';
+import AgentInfo from './AgentInfo'; 
+
 
 const Menu: React.FC = () => {
   const paths = [
@@ -50,6 +52,7 @@ const Menu: React.FC = () => {
         <IonRouterOutlet id="main">
           <Route exact path="/app/Notification" component={Notification} />
           <Route exact path="/app/Dashboard" component={Dashboard} />
+          <Route exact path="/AgentInfo" component={AgentInfo} />
           <Redirect to="/app/Notification" />
         </IonRouterOutlet>
       </IonSplitPane>

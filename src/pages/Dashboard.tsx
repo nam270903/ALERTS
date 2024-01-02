@@ -23,9 +23,11 @@ import {
 } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import './Dashboard.css';
+import { useHistory } from 'react-router-dom';
 
 
-interface Agent {
+
+export interface Agent {
   id: string;
   name: string;
   platform: string;
@@ -44,6 +46,17 @@ const Dashboard: React.FC = () => {
   const [neverconnectedAgents, setneverconnectedgents] = useState<string>('');
   const [pendingAgents, setpendingAgents] = useState<string>('');
   const [totalAgents, settotalAgents] = useState<string>('');
+
+  const history = useHistory();
+
+  const handleAgentClick = (agent: Agent) => {
+    console.log('Clicked agent:', agent);
+    // Navigate to AgentInfo page and pass agent details as URL parameters
+    history.push(`/AgentInfo`,{agent}); {
+
+
+    };
+  };
 
   const filteredAgents = agents
   .filter((agent) => agent.name.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -86,28 +99,6 @@ const Dashboard: React.FC = () => {
 
   }, []);
 
-  useEffect(() => {
-    const alerts = async () => {
-      const options = {
-        method: 'GET',
-        headers: {
-          'User-Agent': 'insomnia/8.4.5',
-          Authorization: 'Bearer ${jwtToken}'
-        }
-      };
-
-      try {
-        const response = await fetch('https://chouette.doclai.com/alerts?y=2023&m=12&d=27', options);
-        const data = await response.json();
-        console.log('Fetched Alerts:',data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    alerts();
-
-  }, []);
 
   useEffect(() => {
     if (jwtToken) {
@@ -251,7 +242,7 @@ const Dashboard: React.FC = () => {
 
         <IonList>
           {filteredAgents.map((agent) => (
-            <IonItem key={agent.id}>
+            <IonItem key={agent.id} onClick={() => handleAgentClick(agent)}>
               <IonLabel>
                 <h2>{agent.name}</h2>
                 <p>ID: {agent.id}</p>
