@@ -3,6 +3,21 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import React, { useState, useEffect } from 'react';
 import {Agent} from './Dashboard';
 
+
+interface PackageItem {
+  name: string;
+  description: string;
+  architecture: string;
+  format: string;
+  size: number;
+}
+interface ProcessItem {
+  cmd: string;
+  name: string;
+  start_time: number;
+  processor: number;
+  size: number;
+}
 const AgentInfo: React.FC = () => {
   const [jwtToken, setJwtToken] = useState<string>('');
   const location = useLocation();
@@ -12,6 +27,11 @@ const AgentInfo: React.FC = () => {
   const [CPUname, setCPUname] = useState<string>('');
   const [RAMfree, setRAMfree] = useState<string>('');
   const [RAMtotal, setRAMtotal] = useState<string>('');
+  const [packages, setPackages] = useState<PackageItem[]>([]);
+  const [processes, setProcesses] = useState<ProcessItem[]>([]);
+  
+
+
 
 
   useEffect(() => {
@@ -57,7 +77,7 @@ const AgentInfo: React.FC = () => {
         }
       };
 
-      const AgentsStatus = async () => {
+      const AgentStatus = async () => {
         try {
           const response = await fetch(`https://chouette.doclai.com/auth/syscollector/${agent.id}/hardware`, options);
           const data = await response.json();
@@ -75,7 +95,54 @@ const AgentInfo: React.FC = () => {
           console.error(error);
         }
       }
-      AgentsStatus();
+      AgentStatus();
+
+      const AgentPackages = async () => {
+        try {
+          const response = await fetch(`https://chouette.doclai.com/auth/syscollector/${agent.id}/packages`, options);
+          const data = await response.json();
+          console.log(data);
+          if (data && data.data) {
+            const extractedPackage: PackageItem[] = data.data.affected_items.map((item: any) => ({
+              name: item.name,
+              description: item.description,
+              architecture: item.architecture,
+              format: item.format,
+              size: item.size,
+            }));
+            setPackages(extractedPackage);
+          }
+
+
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      AgentPackages();
+
+      const AgentProcesses = async () => {
+        try {
+          const response = await fetch(`https://chouette.doclai.com/auth/syscollector/${agent.id}/processes`, options);
+          const data = await response.json();
+          console.log(data);
+          if (data && data.data) {
+            const extractedProcess: ProcessItem[] = data.data.affected_items.map((item: any) => ({
+              cmd: item.cmd,
+              name: item.name,
+              start_time: item.start_time,
+              processor: item.processor,
+              size: item.size,
+            }));
+            setProcesses(extractedProcess);
+
+          }
+
+
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      AgentProcesses();
     }
   }, [jwtToken]);
   
@@ -94,6 +161,66 @@ const AgentInfo: React.FC = () => {
       <p><strong>CPU name:</strong> {CPUname}</p>
       <p><strong>total RAM:</strong> {RAMtotal}</p>
       <p><strong>free RAM:</strong> {RAMfree}</p>
+
+      <div>
+      <h1>Package List</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Architecture</th>
+            <th>Format</th>
+            <th>Size</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {packages.map((Package) => (
+            <tr key={Package.name}>
+              <td>{Package.name}</td>
+              <td>{Package.description}</td>
+              <td>{Package.architecture}</td>
+              <td>{Package.format}</td>
+              <td>{Package.size}</td>
+              
+
+
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+
+      <div>
+      <h1>Process List</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Command</th>
+            <th>Start Time</th>
+            <th>Processor</th>
+            <th>Size</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {processes.map((process) => (
+            <tr key={process.name}>
+              <td>{process.name}</td>
+              <td>{process.cmd}</td>
+              <td>{new Date(process.start_time * 1000).toLocaleString()}</td>
+              <td>{process.processor}</td>
+              <td>{process.size}</td>
+
+
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
       
     </div>
   );

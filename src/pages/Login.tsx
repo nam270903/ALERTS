@@ -26,16 +26,30 @@ const Login: React.FC = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   const doLogin = () => {
-    // Mock authentication logic for testing purposes
-    if (username === '1' && password === '1') {
-      console.log('Login successful!');
-      // If login is successful, navigate to Notification
-      navigation.push('/app', 'forward', 'push');
-    } else {
-      console.log('Invalid username or password');
-      // Show alert for incorrect password
-      setShowAlert(true);
+    const form = new FormData();
+    form.append("username", username);
+    form.append("password", password);
+    const options: RequestInit = {
+      method: 'POST',
+      redirect: 'follow',
+      body:form
+    };
+    try {
+      fetch('https://chouette.doclai.com/login', options)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.token) {
+            navigation.push('/app', 'forward', 'push');
+          } else {
+            console.log('Invalid username or password');
+            setShowAlert(true);
+          }
+        });
+    } catch (error) {
+      console.error(error);
     }
+    
+
   };
 
   return (
