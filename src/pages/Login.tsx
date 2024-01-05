@@ -18,6 +18,8 @@ import {
 import { eye, eyeOff } from 'ionicons/icons';
 import { useState } from 'react';
 import './Login.css';
+import Logo from './ALERTS.png'
+
 const Login: React.FC = () => {
   const navigation = useIonRouter();
   const [username, setUsername] = useState('');
@@ -58,6 +60,10 @@ const Login: React.FC = () => {
       <IonContent>
       <IonGrid className='ion-no-padding login-container'>
         <IonRow>
+            <div className='logo-box'>
+              <img src={Logo} alt='My Logo' />
+            </div>
+
           <IonCol size='12' size-md='8' size-lg='6'>
             <div className='app-name-box'>
               <h1>ALERTS</h1>
@@ -88,13 +94,13 @@ const Login: React.FC = () => {
         </IonRow>
       </IonGrid>
 
-<IonAlert
-  isOpen={showAlert}
-  onDidDismiss={() => setShowAlert(false)}
-  header={'Invalid Password'}
-  message={'Please enter a valid password.'}
-  buttons={['OK']}
-/>
+        <IonAlert
+          isOpen={showAlert}
+          onDidDismiss={() => setShowAlert(false)}
+          header={'Invalid Password'}
+          message={'Please enter a valid password.'}
+          buttons={['OK']}
+        />
       </IonContent>
     </IonPage>
   );
