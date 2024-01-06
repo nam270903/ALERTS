@@ -64,7 +64,6 @@ const Dashboard: React.FC = () => {
   };
 
   useEffect(() => {
-    // Simulating fetching JWT token (replace this with your actual logic)
     const fetchJwtToken = async () => {
       const form = new FormData();
       form.append("username", "admin");
