@@ -51,11 +51,7 @@ const Dashboard: React.FC = () => {
 
   const handleAgentClick = (agent: Agent) => {
     console.log('Clicked agent:', agent);
-    // Navigate to AgentInfo page and pass agent details as URL parameters
-    history.push(`/AgentInfo`,{agent}); {
-
-
-    };
+    history.push(`/app/AgentInfo`, { agent });
   };
 
   const filteredAgents = agents

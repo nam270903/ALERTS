@@ -23,7 +23,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Login from './pages/Login';
 import Menu from './pages/Menu';
-import AgentInfo from './pages/AgentInfo'; // Import your AgentInfo component
+import AgentInfo from './pages/AgentInfo';
 
 
 setupIonicReact();
@@ -31,10 +31,11 @@ setupIonicReact();
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <IonRouterOutlet>
-       <Route exact path="/" component={Login}/>
-       <Route path="/app" component={Menu}/> 
-       <Route exact path="/AgentInfo" component={AgentInfo} />
+      <IonRouterOutlet> 
+       <Route path="/app" component={Menu}/>
+       <Route exact path="/" component={Login}/> 
+       <Route exact path="/app/AgentInfo" component={AgentInfo} />
+       <Redirect to="/app/Notification"/>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

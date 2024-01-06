@@ -9,10 +9,12 @@ import {
   IonLabel,
   IonRow,
   IonCol,
-  IonGrid
+  IonGrid,
+  IonButtons,
+  IonBackButton
 } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { Agent } from './Dashboard';
 import './Agentinfo.css';
 
@@ -35,6 +37,7 @@ interface ProcessItem {
 const AgentInfo: React.FC = () => {
   const [jwtToken, setJwtToken] = useState<string>('');
   const location = useLocation();
+  const history = useHistory();
   const agent: Agent = (location.state as any)?.agent;
   const [CPUcores, setCPUcores] = useState<string>('');
   const [CPUclock, setCPUclock] = useState<string>('');
@@ -146,13 +149,16 @@ const AgentInfo: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot='start'>
+            <IonBackButton defaultHref='/Dashboard'/>
+          </IonButtons>
           <IonTitle>Agent Information</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-
+        
         <IonCard>
-          <IonCardContent>
+          <IonCardContent style={{ overflow: 'auto' }}>
             <IonLabel>
               <h1>Agent Information</h1>
               <IonGrid>
@@ -177,7 +183,7 @@ const AgentInfo: React.FC = () => {
         </IonCard>
 
         <IonCard>
-          <IonCardContent>
+          <IonCardContent style={{ overflow: 'auto' }}>
             <IonLabel>
               <h1>Package List</h1>
               <IonGrid>
@@ -215,7 +221,7 @@ const AgentInfo: React.FC = () => {
         </IonCard>
 
         <IonCard>
-          <IonCardContent>
+          <IonCardContent style={{ overflow: 'auto' }}>
             <IonLabel>
               <h1>Process List</h1>
               <IonGrid>
