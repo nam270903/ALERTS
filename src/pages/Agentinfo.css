@@ -1,7 +1,7 @@
 .table-container {
-  max-height: 300px; 
+  max-height: 300px;
   overflow: auto;
-  border: 1px solid #ddd; 
+  border: 1px solid #ddd;
 }
 
 table {
@@ -13,7 +13,6 @@ table {
 th, td {
   border: 1px solid #ddd;
   padding: 8px;
-  text-align: left;
 }
 
 th {
@@ -21,4 +20,16 @@ th {
   position: sticky;
   top: 0;
   z-index: 1;
+}
+
+.table-container table,
+.table-container th,
+.table-container td {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.table-container th,
+.table-container td {
+  padding: 10px;
 }

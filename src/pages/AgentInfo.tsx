@@ -157,35 +157,108 @@ const AgentInfo: React.FC = () => {
       </IonHeader>
       <IonContent>
         
-        <IonCard>
+      <IonCard>
           <IonCardContent style={{ overflow: 'auto' }}>
             <IonLabel>
-              <h1>Agent Information</h1>
-              <IonGrid>
-                <IonRow>
-                  <IonCol>
-                    <p><strong>Name:</strong> {agent.name}</p>
-                    <p><strong>ID:</strong> {agent.id}</p>
-                    <p><strong>IP Address:</strong> {agent.ip}</p>
-                    <p><strong>Platform:</strong> {agent.platform}</p>
-                    <p><strong>Cluster Node:</strong> {agent.node}</p>
-                    <p><strong>Status:</strong> {agent.status}</p>
-                    <p><strong>CPU cores:</strong> {CPUcores}</p>
-                    <p><strong>CPU clock (mHz):</strong> {CPUclock}</p>
-                    <p><strong>CPU name:</strong> {CPUname}</p>
-                    <p><strong>Total RAM:</strong> {RAMtotal}</p>
-                    <p><strong>Free RAM:</strong> {RAMfree}</p>
-                  </IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonCardContent>
-        </IonCard>
+              <h1 className='ion-text-center'>Agent Information</h1>
+            <IonGrid>
+              <IonRow>
+                <IonCol size="6">
+                  <p><strong>Name:</strong></p>
+                </IonCol>
+                <IonCol size="6">
+                  <p>{agent.name}</p>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="6">
+                  <p><strong>ID:</strong></p>
+                </IonCol>
+                <IonCol size="6">
+                  <p>{agent.id}</p>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="6">
+                  <p><strong>IP Address:</strong></p>
+                </IonCol>
+                <IonCol size="6">
+                  <p>{agent.ip}</p>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="6">
+                  <p><strong>Platform:</strong></p>
+                </IonCol>
+                <IonCol size="6">
+                  <p>{agent.platform}</p>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="6">
+                  <p><strong>Cluster Node:</strong></p>
+                </IonCol>
+                <IonCol size="6">
+                  <p>{agent.node}</p>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="6">
+                  <p><strong>Status:</strong></p>
+                </IonCol>
+                <IonCol size="6">
+                  <p>{agent.status}</p>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="6">
+                  <p><strong>CPU cores:</strong></p>
+                </IonCol>
+                <IonCol size="6">
+                  <p>{CPUcores}</p>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="6">
+                  <p><strong>CPU clock (mHz):</strong></p>
+                </IonCol>
+                <IonCol size="6">
+                  <p>{CPUclock}</p>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="6">
+                  <p><strong>CPU name:</strong></p>
+                </IonCol>
+                <IonCol size="6">
+                  <p>{CPUname}</p>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="6">
+                  <p><strong>Total RAM:</strong></p>
+                </IonCol>
+                <IonCol size="6">
+                  <p>{RAMtotal}</p>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="6">
+                  <p><strong>Free RAM:</strong></p>
+                </IonCol>
+                <IonCol size="6">
+                  <p>{RAMfree}</p>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </IonLabel>
+        </IonCardContent>
+      </IonCard>
 
         <IonCard>
           <IonCardContent style={{ overflow: 'auto' }}>
             <IonLabel>
-              <h1>Package List</h1>
+              <h1 className='ion-text-center'>Package List</h1>
               <IonGrid>
                 <IonRow>
                   <IonCol>
@@ -223,7 +296,7 @@ const AgentInfo: React.FC = () => {
         <IonCard>
           <IonCardContent style={{ overflow: 'auto' }}>
             <IonLabel>
-              <h1>Process List</h1>
+              <h1 className='ion-text-center'>Process List</h1>
               <IonGrid>
                 <IonRow>
                   <IonCol>
