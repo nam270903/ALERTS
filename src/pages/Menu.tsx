@@ -15,7 +15,7 @@ import {
 import { Redirect, Route } from 'react-router';
 import Notification from './Notification';
 import Dashboard from './Dashboard';
-import AgentInfo from './AgentInfo'; 
+import AgentInfo from './AgentInfo';
 
 
 const Menu: React.FC = () => {

@@ -150,7 +150,7 @@ const AgentInfo: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {/* 1st Card - Agent Information */}
+
         <IonCard>
           <IonCardContent>
             <IonLabel>
@@ -176,7 +176,6 @@ const AgentInfo: React.FC = () => {
           </IonCardContent>
         </IonCard>
 
-        {/* 2nd Card - Agent Packages */}
         <IonCard>
           <IonCardContent>
             <IonLabel>
@@ -215,7 +214,6 @@ const AgentInfo: React.FC = () => {
           </IonCardContent>
         </IonCard>
 
-        {/* 3rd Card - Agent Processes */}
         <IonCard>
           <IonCardContent>
             <IonLabel>
@@ -257,3 +255,5 @@ const AgentInfo: React.FC = () => {
     </IonPage>
   );
 };
+
+export default AgentInfo;
