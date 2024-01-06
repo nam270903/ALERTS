@@ -222,7 +222,7 @@ const Dashboard: React.FC = () => {
             <IonCol size="4" className="ion-text-end">
               <IonSelect
                 value={statusFilter}
-                placeholder="Filter by Status"
+                placeholder="Filter"
                 onIonChange={(e) => setStatusFilter(e.detail.value)}
                 className="status-filter"
               >

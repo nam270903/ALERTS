@@ -1,8 +1,20 @@
-import { useParams, useLocation } from 'react-router-dom';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonCard,
+  IonCardContent,
+  IonLabel,
+  IonRow,
+  IonCol,
+  IonGrid
+} from '@ionic/react';
 import React, { useState, useEffect } from 'react';
-import {Agent} from './Dashboard';
-
+import { useLocation } from 'react-router-dom';
+import { Agent } from './Dashboard';
+import './Agentinfo.css';
 
 interface PackageItem {
   name: string;
@@ -11,6 +23,7 @@ interface PackageItem {
   format: string;
   size: number;
 }
+
 interface ProcessItem {
   cmd: string;
   name: string;
@@ -18,6 +31,7 @@ interface ProcessItem {
   processor: number;
   size: number;
 }
+
 const AgentInfo: React.FC = () => {
   const [jwtToken, setJwtToken] = useState<string>('');
   const location = useLocation();
@@ -29,30 +43,22 @@ const AgentInfo: React.FC = () => {
   const [RAMtotal, setRAMtotal] = useState<string>('');
   const [packages, setPackages] = useState<PackageItem[]>([]);
   const [processes, setProcesses] = useState<ProcessItem[]>([]);
-  
-
-
-
 
   useEffect(() => {
-    // Simulating fetching JWT token (replace this with your actual logic)
     const fetchJwtToken = async () => {
       const form = new FormData();
       form.append("username", "admin");
       form.append("password", "admin");
 
-
       const options: RequestInit = {
         method: 'POST',
         redirect: 'follow',
-        body:form
+        body: form,
       };
 
       try {
         const response = await fetch('https://chouette.doclai.com/login', options);
         const data = await response.json();
-
-        console.log(data);
 
         if (data && data.token) {
           setJwtToken(data.token);
@@ -63,25 +69,21 @@ const AgentInfo: React.FC = () => {
     };
 
     fetchJwtToken();
-
   }, []);
-
-
 
   useEffect(() => {
     if (jwtToken) {
       const options = {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${jwtToken}`
-        }
+          Authorization: `Bearer ${jwtToken}`,
+        },
       };
 
       const AgentStatus = async () => {
         try {
           const response = await fetch(`https://chouette.doclai.com/auth/syscollector/${agent.id}/hardware`, options);
           const data = await response.json();
-          console.log(data);
           if (data && data.data) {
             setCPUcores(data.data.affected_items[0].cpu.cores);
             setCPUclock(data.data.affected_items[0].cpu.mhz);
@@ -89,19 +91,17 @@ const AgentInfo: React.FC = () => {
             setRAMfree(data.data.affected_items[0].ram.free);
             setRAMtotal(data.data.affected_items[0].ram.total);
           }
-
-
         } catch (error) {
           console.error(error);
         }
-      }
+      };
+
       AgentStatus();
 
       const AgentPackages = async () => {
         try {
           const response = await fetch(`https://chouette.doclai.com/auth/syscollector/${agent.id}/packages`, options);
           const data = await response.json();
-          console.log(data);
           if (data && data.data) {
             const extractedPackage: PackageItem[] = data.data.affected_items.map((item: any) => ({
               name: item.name,
@@ -112,19 +112,17 @@ const AgentInfo: React.FC = () => {
             }));
             setPackages(extractedPackage);
           }
-
-
         } catch (error) {
           console.error(error);
         }
-      }
+      };
+
       AgentPackages();
 
       const AgentProcesses = async () => {
         try {
           const response = await fetch(`https://chouette.doclai.com/auth/syscollector/${agent.id}/processes`, options);
           const data = await response.json();
-          console.log(data);
           if (data && data.data) {
             const extractedProcess: ProcessItem[] = data.data.affected_items.map((item: any) => ({
               cmd: item.cmd,
@@ -134,96 +132,128 @@ const AgentInfo: React.FC = () => {
               size: item.size,
             }));
             setProcesses(extractedProcess);
-
           }
-
-
         } catch (error) {
           console.error(error);
         }
-      }
+      };
+
       AgentProcesses();
     }
-  }, [jwtToken]);
-  
+  }, [jwtToken, agent.id]);
 
   return (
-    <div>
-      <h1>Agent Information</h1>
-      <p><strong>Name:</strong> {agent.name}</p>
-      <p><strong>ID:</strong> {agent.id}</p>
-      <p><strong>IP Address:</strong> {agent.ip}</p>
-      <p><strong>Platform:</strong> {agent.platform}</p>
-      <p><strong>Cluster Node:</strong> {agent.node}</p>
-      <p><strong>Status:</strong> {agent.status}</p>
-      <p><strong>CPU cores:</strong> {CPUcores}</p>
-      <p><strong>CPU clock (mHz):</strong> {CPUclock}</p>
-      <p><strong>CPU name:</strong> {CPUname}</p>
-      <p><strong>total RAM:</strong> {RAMtotal}</p>
-      <p><strong>free RAM:</strong> {RAMfree}</p>
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Agent Information</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        {/* 1st Card - Agent Information */}
+        <IonCard>
+          <IonCardContent>
+            <IonLabel>
+              <h1>Agent Information</h1>
+              <IonGrid>
+                <IonRow>
+                  <IonCol>
+                    <p><strong>Name:</strong> {agent.name}</p>
+                    <p><strong>ID:</strong> {agent.id}</p>
+                    <p><strong>IP Address:</strong> {agent.ip}</p>
+                    <p><strong>Platform:</strong> {agent.platform}</p>
+                    <p><strong>Cluster Node:</strong> {agent.node}</p>
+                    <p><strong>Status:</strong> {agent.status}</p>
+                    <p><strong>CPU cores:</strong> {CPUcores}</p>
+                    <p><strong>CPU clock (mHz):</strong> {CPUclock}</p>
+                    <p><strong>CPU name:</strong> {CPUname}</p>
+                    <p><strong>Total RAM:</strong> {RAMtotal}</p>
+                    <p><strong>Free RAM:</strong> {RAMfree}</p>
+                  </IonCol>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonCardContent>
+        </IonCard>
 
-      <div>
-      <h1>Package List</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Architecture</th>
-            <th>Format</th>
-            <th>Size</th>
+        {/* 2nd Card - Agent Packages */}
+        <IonCard>
+          <IonCardContent>
+            <IonLabel>
+              <h1>Package List</h1>
+              <IonGrid>
+                <IonRow>
+                  <IonCol>
+                    <div className="table-container">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Architecture</th>
+                            <th>Format</th>
+                            <th>Size</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {packages.map((Package) => (
+                            <tr key={Package.name}>
+                              <td>{Package.name}</td>
+                              <td>{Package.description}</td>
+                              <td>{Package.architecture}</td>
+                              <td>{Package.format}</td>
+                              <td>{Package.size}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </IonCol>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonCardContent>
+        </IonCard>
 
-          </tr>
-        </thead>
-        <tbody>
-          {packages.map((Package) => (
-            <tr key={Package.name}>
-              <td>{Package.name}</td>
-              <td>{Package.description}</td>
-              <td>{Package.architecture}</td>
-              <td>{Package.format}</td>
-              <td>{Package.size}</td>
-              
-
-
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-
-
-      <div>
-      <h1>Process List</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Command</th>
-            <th>Start Time</th>
-            <th>Processor</th>
-            <th>Size</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          {processes.map((process) => (
-            <tr key={process.name}>
-              <td>{process.name}</td>
-              <td>{process.cmd}</td>
-              <td>{new Date(process.start_time * 1000).toLocaleString()}</td>
-              <td>{process.processor}</td>
-              <td>{process.size}</td>
-
-
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-      
-    </div>
+        {/* 3rd Card - Agent Processes */}
+        <IonCard>
+          <IonCardContent>
+            <IonLabel>
+              <h1>Process List</h1>
+              <IonGrid>
+                <IonRow>
+                  <IonCol>
+                    <div className="table-container">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Command</th>
+                            <th>Start Time</th>
+                            <th>Processor</th>
+                            <th>Size</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {processes.map((process) => (
+                            <tr key={process.name}>
+                              <td>{process.name}</td>
+                              <td>{process.cmd}</td>
+                              <td>{new Date(process.start_time * 1000).toLocaleString()}</td>
+                              <td>{process.processor}</td>
+                              <td>{process.size}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </IonCol>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonCardContent>
+        </IonCard>
+      </IonContent>
+    </IonPage>
   );
 };
-
-export default AgentInfo;
