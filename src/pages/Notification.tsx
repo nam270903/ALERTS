@@ -14,6 +14,20 @@ import {
   IonRefresherContent,
 } from '@ionic/react';
 
+interface Hit {
+  _source: {
+    agent: {
+      id: string;
+    };
+    timestamp: string;
+    full_log: string;
+    rule: {
+      description: string;
+      level: number;
+    };
+  };
+}
+
 const NotificationItem: React.FC<{ item: string; onClick: () => void; hasNewNotification: boolean }> = ({ item, onClick, hasNewNotification }) => {
   return (
     <IonItem button onClick={onClick}>
@@ -29,28 +43,79 @@ const NotificationItem: React.FC<{ item: string; onClick: () => void; hasNewNoti
 
 const Notification: React.FC = () => {
   const [items, setItems] = useState<{ text: string; hasNewNotification: boolean }[]>([]);
+  const [jwtToken, setJwtToken] = useState<string>('');
+  const [tableData, setTableData] = useState<any[]>([]);
 
-  const fetchAlerts = async () => {
-    try {
-      const response = await fetch('https://chouette.doclai.com/alerts', {
+
+  useEffect(() => {
+    const fetchJwtToken = async () => {
+      const form = new FormData();
+      form.append("username", "admin");
+      form.append("password", "admin");
+
+
+      const options: RequestInit = {
+        method: 'POST',
+        redirect: 'follow',
+        body:form
+      };
+
+      try {
+        const response = await fetch('https://chouette.doclai.com/login', options);
+        const data = await response.json();
+
+        console.log(data);
+
+        if (data && data.token) {
+          setJwtToken(data.token);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchJwtToken();
+
+  }, []);
+
+
+  useEffect(() => {
+    if (jwtToken) {
+      const options = {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Basic ' + btoa('nam-vu-tue:QtsUj9My:SvZ3R5'),
-        },
-      });
+          Authorization: `Bearer ${jwtToken}`
+        }
+      };
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Fetched alerts:', data);
-        setItems(data.map((alert: any) => ({ text: alert.message, hasNewNotification: true })));
-      } else {
-        console.error('Failed to fetch alerts:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error fetching alerts:', error);
+      const fetchAlerts = async () => {
+        try {
+          const response = await fetch('https://chouette.doclai.com/auth/alerts?y=2024&m=01&d=07', options);
+          const data = await response.json();
+          console.log(data);
+          if (data && data.hits) {
+            const hits: Hit[] = data.hits.hits;
+
+            const extractedData = hits.map((hit) => ({
+              agentId: hit._source.agent.id,
+              timestamp: hit._source.timestamp,
+              fullLog: hit._source.full_log,
+              description: hit._source.rule.description,
+              level: hit._source.rule.level,
+            }));
+    
+            setTableData(extractedData);
+          }
+
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+
+      fetchAlerts();
     }
-  };
+  }, [jwtToken]);
 
   const handleItemClick = (index: number) => {
     const updatedItems = [...items];
@@ -58,16 +123,8 @@ const Notification: React.FC = () => {
     setItems(updatedItems);
   };
 
-  const doRefresh = (event: CustomEvent) => {
-    setTimeout(() => {
-      fetchAlerts();
-      event.detail.complete();
-    }, 1000);
-  };
 
-  useEffect(() => {
-    fetchAlerts(); 
-  }, []);
+
 
   return (
     <IonPage>
@@ -79,26 +136,33 @@ const Notification: React.FC = () => {
           <IonTitle>Notifications</IonTitle>
         </IonToolbar>
       </IonHeader>
-
+Re
       <IonContent class="ion-text-center">
-        <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
-          <IonRefresherContent refreshingSpinner="circular" color="primary"></IonRefresherContent>
-        </IonRefresher>
 
-        <div>
-          <h1>ALERTS!</h1>
-        </div>
+      <table>
+          <thead>
+            <tr>
+              <th>Agent ID</th>
+              <th>Timestamp</th>
+              <th>Full Log</th>
+              <th>Description</th>
+              <th>Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tableData.map((data, index) => (
+              <tr key={index}>
+                <td>{data.agentId}</td>
+                <td>{data.timestamp}</td>
+                <td>{data.fullLog}</td>
+                <td>{data.description}</td>
+                <td>{data.level}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-        <IonList>
-          {items.map((item, index) => (
-            <NotificationItem
-              key={item.text}
-              item={item.text}
-              hasNewNotification={item.hasNewNotification}
-              onClick={() => handleItemClick(index)}
-            />
-          ))}
-        </IonList>
+
       </IonContent>
     </IonPage>
   );
