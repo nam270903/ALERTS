@@ -14,10 +14,9 @@ import {
   IonBackButton
 } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, useParams } from 'react-router-dom';
 import { Agent } from './Dashboard';
 import './Agentinfo.css';
-
 interface PackageItem {
   name: string;
   description: string;
@@ -37,7 +36,6 @@ interface ProcessItem {
 const AgentInfo: React.FC = () => {
   const [jwtToken, setJwtToken] = useState<string>('');
   const location = useLocation();
-  const history = useHistory();
   const agent: Agent = (location.state as any)?.agent;
   const [CPUcores, setCPUcores] = useState<string>('');
   const [CPUclock, setCPUclock] = useState<string>('');
@@ -144,6 +142,8 @@ const AgentInfo: React.FC = () => {
       AgentProcesses();
     }
   }, [jwtToken, agent.id]);
+
+  
 
   return (
     <IonPage>
@@ -274,8 +274,8 @@ const AgentInfo: React.FC = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {packages.map((Package) => (
-                            <tr key={Package.name}>
+                          {packages.map((Package, index) => (
+                            <tr key={index}>
                               <td>{Package.name}</td>
                               <td>{Package.description}</td>
                               <td>{Package.architecture}</td>
@@ -312,8 +312,8 @@ const AgentInfo: React.FC = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {processes.map((process) => (
-                            <tr key={process.name}>
+                          {processes.map((process, index) => (
+                            <tr key={index}>
                               <td>{process.name}</td>
                               <td>{process.cmd}</td>
                               <td>{new Date(process.start_time * 1000).toLocaleString()}</td>

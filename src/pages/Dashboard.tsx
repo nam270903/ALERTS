@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
   IonPage,
   IonHeader,
@@ -16,16 +17,12 @@ import {
   IonRow,
   IonCol,
   IonBadge,
-  IonIcon,
   IonSearchbar,
   IonSelect,
   IonSelectOption,
 } from '@ionic/react';
-import React, { useState, useEffect } from 'react';
-import './Dashboard.css';
 import { useHistory } from 'react-router-dom';
-
-
+import ReactApexChart from 'react-apexcharts';
 
 export interface Agent {
   id: string;
@@ -41,12 +38,15 @@ const Dashboard: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
   const [jwtToken, setJwtToken] = useState<string>('');
   const [agents, setAgents] = useState<Agent[]>([]);
-  const [activeAgents, setactiveAgents] = useState<string>('');
-  const [disconectedAgents, setdisconectedAgents] = useState<string>('');
-  const [neverconnectedAgents, setneverconnectedgents] = useState<string>('');
-  const [pendingAgents, setpendingAgents] = useState<string>('');
-  const [totalAgents, settotalAgents] = useState<string>('');
-
+  const [activeAgents, setActiveAgents] = useState<string>('');
+  const [disconnectedAgents, setDisconnectedAgents] = useState<string>('');
+  const [neverConnectedAgents, setNeverConnectedAgents] = useState<string>('');
+  const [pendingAgents, setPendingAgents] = useState<string>('');
+  const [totalAgents, setTotalAgents] = useState<string>('');
+  const [pieChartData, setPieChartData] = useState<number[]>([]);
+  const filteredAgents = agents
+    .filter((agent) => agent.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter((agent) => statusFilter === null || agent.status === statusFilter);
   const history = useHistory();
 
   const handleAgentClick = (agent: Agent) => {
@@ -54,99 +54,121 @@ const Dashboard: React.FC = () => {
     history.push(`/app/AgentInfo`, { agent });
   };
 
-  const filteredAgents = agents
-  .filter((agent) => agent.name.toLowerCase().includes(searchTerm.toLowerCase()))
-  .filter((agent) => statusFilter === null || agent.status === statusFilter);
-
   const clearFilter = () => {
     setStatusFilter(null);
     setSearchTerm('');
   };
 
+  const updatePieChartData = () => {
+    const data = [
+      parseInt(activeAgents, 10),
+      parseInt(disconnectedAgents, 10),
+      parseInt(neverConnectedAgents, 10),
+      parseInt(pendingAgents, 10),
+    ];
+
+    console.log('Pie Chart Data:', data);
+
+    setPieChartData(data);
+  };
+
+  const pieChartOptions = {
+    labels: ['Active', 'Disconnected', 'Never Connected', 'Pending'],
+    colors: ['#28a745', '#dc3545', '#ffc107', '#007bff'],
+  };
+
   useEffect(() => {
     const fetchJwtToken = async () => {
       const form = new FormData();
-      form.append("username", "admin");
-      form.append("password", "admin");
-
+      form.append('username', 'admin');
+      form.append('password', 'admin');
 
       const options: RequestInit = {
         method: 'POST',
         redirect: 'follow',
-        body:form
+        body: form,
       };
 
       try {
         const response = await fetch('https://chouette.doclai.com/login', options);
         const data = await response.json();
 
-        console.log(data);
+        console.log('Login Response:', data);
 
         if (data && data.token) {
           setJwtToken(data.token);
         }
       } catch (error) {
-        console.error(error);
+        console.error('Login Error:', error);
       }
     };
 
     fetchJwtToken();
-
   }, []);
-
 
   useEffect(() => {
     if (jwtToken) {
       const options = {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${jwtToken}`
-        }
+          Authorization: `Bearer ${jwtToken}`,
+        },
       };
 
-      const ListAgents = async () => {
+      const listAgents = async () => {
         try {
           const response = await fetch('https://chouette.doclai.com/auth/agents', options);
           const data = await response.json();
-          console.log(data);
+
+          console.log('API Response:', data);
+
           const extractedAgents: Agent[] = data.data.affected_items.map((item: any) => ({
             id: item.id,
             name: item.name,
             ip: item.ip,
             platform: item.os.platform,
             status: item.status,
-            node: item.node_name
+            node: item.node_name,
           }));
-  
+
+          console.log('Extracted Agents:', extractedAgents);
+
           setAgents(extractedAgents);
+          
         } catch (error) {
-          console.error(error);
+          console.error('List Agents Error:', error);
         }
       };
 
-      const AgentsStatus = async () => {
+      const agentsStatus = async () => {
         try {
           const response = await fetch('https://chouette.doclai.com/auth/agents/summary/status', options);
           const data = await response.json();
-          console.log(data);
+
+          console.log('Agents Status Response:', data);
+
           if (data && data.data) {
-            setactiveAgents(data.data.connection.active);
-            setneverconnectedgents(data.data.connection.never_connected);
-            setdisconectedAgents(data.data.connection.disconnected);
-            setpendingAgents(data.data.connection.pending);
-            settotalAgents(data.data.connection.total);
+            setActiveAgents(data.data.connection.active);
+            setNeverConnectedAgents(data.data.connection.never_connected);
+            setDisconnectedAgents(data.data.connection.disconnected);
+            setPendingAgents(data.data.connection.pending);
+            setTotalAgents(data.data.connection.total);
           }
-
-
         } catch (error) {
-          console.error(error);
+          console.error('Agents Status Error:', error);
         }
-      }
+      };
 
-      ListAgents();
-      AgentsStatus();
+      listAgents();
+      agentsStatus();
     }
   }, [jwtToken]);
+
+  useEffect(() => {
+    // Update the chart data whenever relevant state variables change
+    updatePieChartData();
+  }, [activeAgents, disconnectedAgents, neverConnectedAgents, pendingAgents]);
+
 
   return (
     <IonPage>
@@ -175,6 +197,17 @@ const Dashboard: React.FC = () => {
 
         <IonCard>
           <IonCardContent>
+            <ReactApexChart
+              options={pieChartOptions}
+              series={pieChartData}
+              type="donut"
+              height={350}
+            />
+          </IonCardContent>
+        </IonCard>
+
+        <IonCard>
+          <IonCardContent>
             <IonGrid>
               <IonRow>
                 <IonCol>
@@ -183,13 +216,13 @@ const Dashboard: React.FC = () => {
                 </IonCol>
                 <IonCol>
                   <IonLabel>Disconnected:</IonLabel>
-                  <IonBadge color="danger">{disconectedAgents}</IonBadge>
+                  <IonBadge color="danger">{disconnectedAgents}</IonBadge>
                 </IonCol>
               </IonRow>
               <IonRow>
                 <IonCol>
                   <IonLabel>Never Connected</IonLabel>
-                  <IonBadge color="warning">{neverconnectedAgents}</IonBadge>
+                  <IonBadge color="warning">{neverConnectedAgents}</IonBadge>
                 </IonCol>
                 <IonCol>
                   <IonLabel>Pending:</IonLabel>
@@ -227,10 +260,7 @@ const Dashboard: React.FC = () => {
                 <IonSelectOption value="never_connected">Never Connected</IonSelectOption>
               </IonSelect>
 
-              <IonButton onClick={clearFilter}>
-                  Clear Filter
-                </IonButton>
-
+              <IonButton onClick={clearFilter}>Clear Filter</IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>
@@ -247,10 +277,21 @@ const Dashboard: React.FC = () => {
                 <p>Status: {agent.status}</p>
               </IonLabel>
 
-              <IonBadge color={agent.status === 'active' ? 'success' : agent.status === 'disconnected' ? 'danger' : 'warning'}>
-                {agent.status === 'active' ? 'Active' : agent.status === 'disconnected' ? 'Disconnect' : 'N'}
+              <IonBadge
+                color={
+                  agent.status === 'active'
+                    ? 'success'
+                    : agent.status === 'disconnected'
+                    ? 'danger'
+                    : 'warning'
+                }
+              >
+                {agent.status === 'active'
+                  ? 'Active'
+                  : agent.status === 'disconnected'
+                  ? 'Disconnect'
+                  : 'N'}
               </IonBadge>
-
             </IonItem>
           ))}
         </IonList>
