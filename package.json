@@ -19,6 +19,7 @@
     "@capacitor/keyboard": "5.0.6",
     "@capacitor/push-notifications": "^5.1.0",
     "@capacitor/status-bar": "5.0.6",
+    "@capacitor/toast": "^5.0.6",
     "@ionic/react": "^7.0.0",
     "@ionic/react-router": "^7.0.0",
     "@mui/material": "^5.15.0",

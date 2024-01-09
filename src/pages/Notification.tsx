@@ -136,7 +136,6 @@ const Notification: React.FC = () => {
           <IonTitle>Notifications</IonTitle>
         </IonToolbar>
       </IonHeader>
-Re
       <IonContent class="ion-text-center">
 
       <table>

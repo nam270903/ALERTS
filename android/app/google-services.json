@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "482210889947",
+    "project_id": "alerts-48fdc",
+    "storage_bucket": "alerts-48fdc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482210889947:android:060b81d62b86b856e30cfe",
+        "android_client_info": {
+          "package_name": "com.alerts.fcm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVy4kK2Dx6vuLZgx1fjpU80KcwhUROu5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

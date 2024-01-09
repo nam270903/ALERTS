@@ -17,6 +17,9 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory, useParams } from 'react-router-dom';
 import { Agent } from './Dashboard';
 import './Agentinfo.css';
+import ReactApexChart from 'react-apexcharts';
+
+
 interface PackageItem {
   name: string;
   description: string;
@@ -44,6 +47,23 @@ const AgentInfo: React.FC = () => {
   const [RAMtotal, setRAMtotal] = useState<string>('');
   const [packages, setPackages] = useState<PackageItem[]>([]);
   const [processes, setProcesses] = useState<ProcessItem[]>([]);
+  const [ramChartData, setRamChartData] = useState<number[]>([]);
+  const [RAMused, setRAMused] = useState<string>('');
+
+  const updateRamChartData = () => {
+    const data = [
+      parseInt(RAMused,10),
+      parseInt(RAMfree,10),
+    ];
+    console.log('RAM Chart Data:', data)
+
+    setRamChartData(data);
+  };
+
+  const pieChartOptions = {
+    labels: ['Used RAM', 'Free RAM'],
+    colors: [ '#dc3545','#28a745'],
+  };
 
   useEffect(() => {
     const fetchJwtToken = async () => {
@@ -91,6 +111,16 @@ const AgentInfo: React.FC = () => {
             setCPUname(data.data.affected_items[0].cpu.name);
             setRAMfree(data.data.affected_items[0].ram.free);
             setRAMtotal(data.data.affected_items[0].ram.total);
+            const free = parseFloat(RAMfree);
+            const total = parseFloat(RAMtotal);
+        
+            // Check if free and total are valid numbers before calculating the sum
+            if (!isNaN(free) && !isNaN(total)) {
+              const used = total - free;
+              // Update RAMused state with the sum as a string
+              setRAMused(used.toString());
+            }
+            
           }
         } catch (error) {
           console.error(error);
@@ -140,10 +170,13 @@ const AgentInfo: React.FC = () => {
       };
 
       AgentProcesses();
-    }
-  }, [jwtToken, agent.id]);
 
-  
+    }
+  }, [jwtToken, agent.id, RAMfree, RAMtotal]);
+
+  useEffect(() => {
+    updateRamChartData();
+  }, [RAMused,RAMfree]);
 
   return (
     <IonPage>
@@ -156,7 +189,7 @@ const AgentInfo: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        
+
       <IonCard>
           <IonCardContent style={{ overflow: 'auto' }}>
             <IonLabel>
@@ -244,6 +277,14 @@ const AgentInfo: React.FC = () => {
               </IonRow>
               <IonRow>
                 <IonCol size="6">
+                  <p><strong>Used RAM:</strong></p>
+                </IonCol>
+                <IonCol size="6">
+                  <p>{RAMused}</p>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="6">
                   <p><strong>Free RAM:</strong></p>
                 </IonCol>
                 <IonCol size="6">
@@ -254,6 +295,17 @@ const AgentInfo: React.FC = () => {
           </IonLabel>
         </IonCardContent>
       </IonCard>
+
+      <IonCard>
+          <IonCardContent>
+            <ReactApexChart
+              options={pieChartOptions}
+              series={ramChartData}
+              type="donut"
+              height={350}
+            />
+          </IonCardContent>
+        </IonCard>
 
         <IonCard>
           <IonCardContent style={{ overflow: 'auto' }}>
