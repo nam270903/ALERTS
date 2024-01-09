@@ -11,17 +11,19 @@ import {
   IonMenuToggle,
   IonItem,
   IonButton,
+  IonIcon,
 } from '@ionic/react';
 import { Redirect, Route } from 'react-router';
+import { notificationsOutline, appsOutline, logOutOutline } from 'ionicons/icons';  // Import the necessary Ionicons
+
 import Notification from './Notification';
 import Dashboard from './Dashboard';
 import AgentInfo from './AgentInfo';
 
-
 const Menu: React.FC = () => {
   const paths = [
-    { name: 'Notification', url: '/app/Notification' },
-    { name: 'Dashboard', url: '/app/Dashboard' },
+    { name: 'Notification', url: '/app/Notification', icon: notificationsOutline },
+    { name: 'Dashboard', url: '/app/Dashboard', icon: appsOutline },
   ];
 
   return (
@@ -38,12 +40,14 @@ const Menu: React.FC = () => {
             {paths.map((item, index) => (
               <IonMenuToggle key={index}>
                 <IonItem routerLink={item.url} routerDirection="forward">
+                  <IonIcon icon={item.icon} slot="start" />
                   {item.name}
                 </IonItem>
               </IonMenuToggle>
             ))}
 
             <IonButton routerLink="/" routerDirection="back" expand="full">
+              <IonIcon icon={logOutOutline} slot="start" />
               Sign out
             </IonButton>
           </IonContent>

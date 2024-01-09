@@ -21,7 +21,7 @@ import {
   IonSelect,
   IonSelectOption,
 } from '@ionic/react';
-import { useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import ReactApexChart from 'react-apexcharts';
 
 export interface Agent {
@@ -165,10 +165,11 @@ const Dashboard: React.FC = () => {
   }, [jwtToken]);
 
   useEffect(() => {
-    // Update the chart data whenever relevant state variables change
     updatePieChartData();
   }, [activeAgents, disconnectedAgents, neverConnectedAgents, pendingAgents]);
 
+
+  
 
   return (
     <IonPage>
@@ -177,7 +178,7 @@ const Dashboard: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>Dashboard</IonTitle>
+          <IonTitle className='ion-text-center'>Dashboard</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -274,7 +275,6 @@ const Dashboard: React.FC = () => {
                 <p>IP Address: {agent.ip}</p>
                 <p>Platform: {agent.platform}</p>
                 <p>Cluster Node: {agent.node}</p>
-                <p>Status: {agent.status}</p>
               </IonLabel>
 
               <IonBadge

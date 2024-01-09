@@ -114,10 +114,8 @@ const AgentInfo: React.FC = () => {
             const free = parseFloat(RAMfree);
             const total = parseFloat(RAMtotal);
         
-            // Check if free and total are valid numbers before calculating the sum
             if (!isNaN(free) && !isNaN(total)) {
               const used = total - free;
-              // Update RAMused state with the sum as a string
               setRAMused(used.toString());
             }
             

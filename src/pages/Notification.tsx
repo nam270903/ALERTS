@@ -8,11 +8,11 @@ import {
   IonButtons,
   IonMenuButton,
   IonList,
-  IonLabel,
   IonItem,
-  IonRefresher,
-  IonRefresherContent,
+  IonLabel,
+  IonBadge,
 } from '@ionic/react';
+import ReactApexChart from 'react-apexcharts';
 
 interface Hit {
   _source: {
@@ -28,36 +28,21 @@ interface Hit {
   };
 }
 
-const NotificationItem: React.FC<{ item: string; onClick: () => void; hasNewNotification: boolean }> = ({ item, onClick, hasNewNotification }) => {
-  return (
-    <IonItem button onClick={onClick}>
-      <IonLabel>{item}</IonLabel>
-      {hasNewNotification && (
-        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: '8px' }}>
-          <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'blue' }}></div>
-        </div>
-      )}
-    </IonItem>
-  );
-};
-
 const Notification: React.FC = () => {
-  const [items, setItems] = useState<{ text: string; hasNewNotification: boolean }[]>([]);
   const [jwtToken, setJwtToken] = useState<string>('');
   const [tableData, setTableData] = useState<any[]>([]);
-
+  const [pieChartData, setPieChartData] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
   useEffect(() => {
     const fetchJwtToken = async () => {
       const form = new FormData();
-      form.append("username", "admin");
-      form.append("password", "admin");
-
+      form.append('username', 'admin');
+      form.append('password', 'admin');
 
       const options: RequestInit = {
         method: 'POST',
         redirect: 'follow',
-        body:form
+        body: form,
       };
 
       try {
@@ -75,17 +60,15 @@ const Notification: React.FC = () => {
     };
 
     fetchJwtToken();
-
   }, []);
-
 
   useEffect(() => {
     if (jwtToken) {
       const options = {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${jwtToken}`
-        }
+          Authorization: `Bearer ${jwtToken}`,
+        },
       };
 
       const fetchAlerts = async () => {
@@ -103,65 +86,123 @@ const Notification: React.FC = () => {
               description: hit._source.rule.description,
               level: hit._source.rule.level,
             }));
-    
+
             setTableData(extractedData);
           }
-
         } catch (error) {
           console.error(error);
         }
       };
 
+      fetchAlerts();
+    }
+  }, [jwtToken]);
+
+  useEffect(() => {
+    if (jwtToken) {
+      const options = {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      };
+
+      const fetchAlerts = async () => {
+        try {
+          const response = await fetch('https://chouette.doclai.com/auth/alerts?y=2024&m=01&d=07', options);
+          const data = await response.json();
+          console.log(data);
+          if (data && data.hits) {
+            const hits: Hit[] = data.hits.hits;
+
+            const extractedData = hits.map((hit) => ({
+              agentId: hit._source.agent.id,
+              timestamp: hit._source.timestamp,
+              fullLog: hit._source.full_log,
+              description: hit._source.rule.description,
+              level: hit._source.rule.level,
+            }));
+
+            setTableData(extractedData);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
 
       fetchAlerts();
     }
   }, [jwtToken]);
 
-  const handleItemClick = (index: number) => {
-    const updatedItems = [...items];
-    updatedItems[index].hasNewNotification = false;
-    setItems(updatedItems);
+  useEffect(() => {
+    if (jwtToken) {
+      const levelDistribution = Array(15).fill(0);
+
+      tableData.forEach((data) => {
+        levelDistribution[data.level - 1]++;
+      });
+
+      setPieChartData(levelDistribution);
+    }
+  }, [jwtToken, tableData]);
+
+  const pieChartOptions = {
+    labels: ['Level 1','Level 2','Level 3','Level 4','Level 5','Level 6','Level 7','Level 8','Level 9','Level 10','Level 11','Level 12','Level 13','Level 14','Level 15',],
+    colors: ['#28a745','#4caf50','#66bb6a','#81c784','#a5d6a7','#c8e6c9','#e6ee9c','#ffee58','#ffd600','#ffc107','#ffb300','#ffa000','#ff8f00','#ff6f00','#ff3d00',],
   };
 
+  const getBadgeColor = (level: number): string => {
+    if (level <= 5) {
+      return 'success';
+    } else if (level <= 11) {
+      return 'warning';
+    } else {
+      return 'danger'; 
+    }
+  };
 
-
+  const getBadgeContent = (level: number): string => {
+    if (level <= 5) {
+      return `Level ${level}: Safe`;
+    } else if (level <= 11) {
+      return `Level ${level}: Warning`;
+    } else {
+      return `Level ${level}: Dangerous`;
+    }
+  };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonMenuButton></IonMenuButton>
+            <IonMenuButton />
           </IonButtons>
-          <IonTitle>Notifications</IonTitle>
+          <IonTitle class="ion-text-center">YOUR ALERTS</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent class="ion-text-center">
 
-      <table>
-          <thead>
-            <tr>
-              <th>Agent ID</th>
-              <th>Timestamp</th>
-              <th>Full Log</th>
-              <th>Description</th>
-              <th>Level</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tableData.map((data, index) => (
-              <tr key={index}>
-                <td>{data.agentId}</td>
-                <td>{data.timestamp}</td>
-                <td>{data.fullLog}</td>
-                <td>{data.description}</td>
-                <td>{data.level}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <IonContent class="ion-padding">
+        <ReactApexChart options={pieChartOptions} series={pieChartData} type="donut" height={350} />
 
+        <IonList>
+          {tableData.map((data, index) => (
+            <IonItem key={index} lines="full">
+              
+              <IonLabel>
+                <h2 className="ion-text-primary">Agent ID: {data.agentId}</h2>
+                <p>Timestamp: {data.timestamp}</p>
+                <p>Full Log: {data.fullLog}</p>
+                <p>Description: {data.description}</p>
+              </IonLabel>
 
+              <IonBadge color={getBadgeColor(data.level)} slot="end">
+                 {getBadgeContent(data.level)}
+              </IonBadge>    
+
+            </IonItem>
+          ))}
+        </IonList>
       </IonContent>
     </IonPage>
   );
