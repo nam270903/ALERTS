@@ -32,3 +32,8 @@
   .logo-box img {
     max-width: 100%;
   }
+  
+  .custom-alert .alert-button-inner {
+    color: black; 
+    background-color: white; 
+  }

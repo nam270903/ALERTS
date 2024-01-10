@@ -101,6 +101,7 @@ const Login: React.FC = () => {
           header={'Invalid Password'}
           message={'Please enter a valid password.'}
           buttons={['OK']}
+          cssClass={"custom-alert"}
         />
       </IonContent>
     </IonPage>
