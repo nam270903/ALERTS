@@ -29,7 +29,6 @@ const Login: React.FC = () => {
   const [authenticated, setAuthenticated] = useState(false);
 
   const doLogin = () => {
-    navigation.push('/app', 'forward','replace')
     const form = new FormData();
     form.append("username", username);
     form.append("password", password);
