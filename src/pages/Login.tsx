@@ -26,8 +26,10 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
 
   const doLogin = () => {
+    navigation.push('/app', 'forward','replace')
     const form = new FormData();
     form.append("username", username);
     form.append("password", password);
@@ -42,6 +44,8 @@ const Login: React.FC = () => {
         .then((data) => {
           if (data && data.token) {
             navigation.push('/app', 'forward', 'push');
+            console.log('User successfully logged in!');
+            setAuthenticated(true);
           } else {
             console.log('Invalid username or password');
             setShowAlert(true);
@@ -59,7 +63,7 @@ const Login: React.FC = () => {
 
       <IonContent>
       <IonGrid className='ion-no-padding login-container'>
-        <IonRow>
+        <IonRow className='ion-justify-content-center ion-align-items-center'>
             <div className='logo-box'>
               <img src={Logo} alt='My Logo' />
             </div>
@@ -85,7 +89,7 @@ const Login: React.FC = () => {
               </IonItem>
 
               <div style={{ marginTop: '10px' }}>
-                <IonButton onClick={doLogin} color='primary' style={{ color: '#000000' }}>
+                <IonButton onClick={doLogin} color='primary' style={{ color: '#000000', width:'100%' }}>
                   Log in
                 </IonButton>
               </div>

@@ -28,18 +28,18 @@ const Menu: React.FC = () => {
   ];
 
   return (
-    <IonPage>
+    <IonPage style={{ width: '100%', height: '100%' }}>
       <IonSplitPane contentId="main">
-        <IonMenu contentId="main">
+        <IonMenu side="start" contentId="main" >
           <IonHeader>
             <IonToolbar>
               <IonTitle>Menu</IonTitle>
             </IonToolbar>
           </IonHeader>
 
-          <IonContent>
+          <IonContent style={{ width: '100%' }}>
             {paths.map((item, index) => (
-              <IonMenuToggle key={index}>
+              <IonMenuToggle key={index} autoHide={false}>
                 <IonItem routerLink={item.url} routerDirection="forward">
                   <IonIcon icon={item.icon} slot="start" />
                   {item.name}

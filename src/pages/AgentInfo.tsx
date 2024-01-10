@@ -11,6 +11,7 @@ import {
   IonCol,
   IonGrid,
   IonButtons,
+  IonButton,
   IonBackButton
 } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
