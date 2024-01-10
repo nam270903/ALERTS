@@ -24,7 +24,7 @@ import './theme/variables.css';
 import Login from './pages/Login';
 import Menu from './pages/Menu';
 import AgentInfo from './pages/AgentInfo';
-
+import NotificationInfo from './pages/NotificationInfo';
 
 setupIonicReact();
 
@@ -35,6 +35,7 @@ const App: React.FC = () => (
        <Route path="/app" component={Menu}/>
        <Route exact path="/" component={Login}/> 
        <Route exact path="/app/AgentInfo" component={AgentInfo} />
+       <Route exact path="/app/NotificationInfo" component={NotificationInfo} />
        <Redirect to="/app/Notification"/>
       </IonRouterOutlet>
     </IonReactRouter>

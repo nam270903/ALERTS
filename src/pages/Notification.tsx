@@ -13,8 +13,9 @@ import {
   IonBadge,
 } from '@ionic/react';
 import ReactApexChart from 'react-apexcharts';
+import { NavLink, useHistory } from 'react-router-dom';
 
-interface Hit {
+export interface Hit {
   _source: {
     agent: {
       id: string;
@@ -32,6 +33,12 @@ const Notification: React.FC = () => {
   const [jwtToken, setJwtToken] = useState<string>('');
   const [tableData, setTableData] = useState<any[]>([]);
   const [pieChartData, setPieChartData] = useState<number[]>([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const history = useHistory();
+
+  const handleNotiClick = (data: Hit) => {
+    console.log('Clicked noti:', data);
+    history.push(`/app/NotificaionInfo`, { data });
+  };
 
   useEffect(() => {
     const fetchJwtToken = async () => {
@@ -73,7 +80,7 @@ const Notification: React.FC = () => {
 
       const fetchAlerts = async () => {
         try {
-          const response = await fetch('https://chouette.doclai.com/auth/alerts?y=2024&m=01&d=07', options);
+          const response = await fetch('https://chouette.doclai.com/auth/recent-alerts?sz=20', options);
           const data = await response.json();
           console.log(data);
           if (data && data.hits) {
@@ -187,7 +194,7 @@ const Notification: React.FC = () => {
 
         <IonList>
           {tableData.map((data, index) => (
-            <IonItem key={index} lines="full">
+            <IonItem key={index} lines="full" onClick={() => handleNotiClick(data)}>
               
               <IonLabel>
                 <h2 className="ion-text-primary">Agent ID: {data.agentId}</h2>

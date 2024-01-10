@@ -19,6 +19,7 @@ import { notificationsOutline, appsOutline, logOutOutline } from 'ionicons/icons
 import Notification from './Notification';
 import Dashboard from './Dashboard';
 import AgentInfo from './AgentInfo';
+import NotificationInfo from './NotificationInfo';
 
 const Menu: React.FC = () => {
   const paths = [
@@ -57,6 +58,7 @@ const Menu: React.FC = () => {
           <Route exact path="/app/Notification" component={Notification} />
           <Route exact path="/app/Dashboard" component={Dashboard} />
           <Route exact path="/app/AgentInfo" component={AgentInfo} />
+          <Route exact path="/app/NotificationInfo" component={NotificationInfo} />
           <Redirect to="/app/Notification" />
         </IonRouterOutlet>
       </IonSplitPane>
