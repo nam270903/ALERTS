@@ -105,41 +105,6 @@ const Notification: React.FC = () => {
     }
   }, [jwtToken]);
 
-  useEffect(() => {
-    if (jwtToken) {
-      const options = {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      };
-
-      const fetchAlerts = async () => {
-        try {
-          const response = await fetch('https://chouette.doclai.com/auth/alerts?y=2024&m=01&d=07', options);
-          const data = await response.json();
-          console.log(data);
-          if (data && data.hits) {
-            const hits: Hit[] = data.hits.hits;
-
-            const extractedData = hits.map((hit) => ({
-              agentId: hit._source.agent.id,
-              timestamp: hit._source.timestamp,
-              fullLog: hit._source.full_log,
-              description: hit._source.rule.description,
-              level: hit._source.rule.level,
-            }));
-
-            setTableData(extractedData);
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
-      fetchAlerts();
-    }
-  }, [jwtToken]);
 
   useEffect(() => {
     if (jwtToken) {
