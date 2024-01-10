@@ -178,7 +178,7 @@ const Dashboard: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle className='ion-text-center'>Dashboard</IonTitle>
+          <IonTitle>DASHBOARD</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

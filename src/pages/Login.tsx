@@ -53,8 +53,6 @@ const Login: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
-    
-
   };
 
   return (

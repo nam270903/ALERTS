@@ -185,7 +185,7 @@ const Notification: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle class="ion-text-center">YOUR ALERTS</IonTitle>
+          <IonTitle>YOUR ALERTS</IonTitle>
         </IonToolbar>
       </IonHeader>
 
