@@ -15,17 +15,29 @@ import {
 } from '@ionic/react';
 import { Redirect, Route } from 'react-router';
 import { notificationsOutline, appsOutline, logOutOutline } from 'ionicons/icons';  // Import the necessary Ionicons
+import { useState } from 'react';
 
 import Notification from './Notification';
 import Dashboard from './Dashboard';
 import AgentInfo from './AgentInfo';
 import NotificationInfo from './NotificationInfo';
+import LogoutAlert from './LogoutAlert';
 
 const Menu: React.FC = () => {
   const paths = [
     { name: 'Notification', url: '/app/Notification', icon: notificationsOutline },
     { name: 'Dashboard', url: '/app/Dashboard', icon: appsOutline },
   ];
+  const [showLogoutAlert, setShowLogoutAlert] = useState(false);
+
+  const handleLogout = () => {
+    setShowLogoutAlert(true);
+  };
+
+  const confirmLogout = () => {
+    console.log('User has been logged out.');
+    setShowLogoutAlert(false);
+  };
 
   return (
     <IonPage style={{ width: '100%', height: '100%' }}>
@@ -47,10 +59,16 @@ const Menu: React.FC = () => {
               </IonMenuToggle>
             ))}
 
-            <IonButton routerLink="/" routerDirection="back" expand="full">
+            <IonButton onClick={handleLogout} expand="full">
               <IonIcon icon={logOutOutline} slot="start" />
               Sign out
             </IonButton>
+
+            <LogoutAlert
+            isOpen={showLogoutAlert}
+            onDidDismiss={() => setShowLogoutAlert(false)}
+            onLogoutConfirmed={confirmLogout}
+          />
           </IonContent>
         </IonMenu>
 
