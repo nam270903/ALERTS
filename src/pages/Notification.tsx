@@ -150,7 +150,7 @@ const Notification: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>YOUR ALERTS</IonTitle>
+          <IonTitle>NOTIFICATIONS</IonTitle>
         </IonToolbar>
       </IonHeader>
 
