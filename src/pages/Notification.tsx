@@ -80,7 +80,7 @@ const Notification: React.FC = () => {
 
       const fetchAlerts = async () => {
         try {
-          const response = await fetch('https://chouette.doclai.com/auth/recent-alerts?sz=20', options);
+          const response = await fetch('https://chouette.doclai.com/auth/recent-alerts?sz=50', options);
           const data = await response.json();
           console.log(data);
           if (data && data.hits) {
@@ -150,7 +150,7 @@ const Notification: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>YOUR ALERTS</IonTitle>
+          <IonTitle>NOTIFICATIONS</IonTitle>
         </IonToolbar>
       </IonHeader>
 
