@@ -57,7 +57,6 @@ const Login: React.FC = () => {
 
   return (
     <IonPage>
-
       <IonContent>
       <IonGrid className='ion-no-padding login-container'>
         <IonRow className='ion-justify-content-center ion-align-items-center'>
