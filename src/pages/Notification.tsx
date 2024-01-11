@@ -80,7 +80,7 @@ const Notification: React.FC = () => {
 
       const fetchAlerts = async () => {
         try {
-          const response = await fetch('https://chouette.doclai.com/auth/alerts?y=2024&m=01&d=10', options);
+          const response = await fetch('https://chouette.doclai.com/auth/recent-alerts?sz=50', options);
           const data = await response.json();
           console.log(data);
           if (data && data.hits) {
