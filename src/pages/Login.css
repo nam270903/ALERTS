@@ -1,39 +1,144 @@
-  .login-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-  
+/* Set the background color and other styles for the entire login page */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #5271ff; /* Replace with the background color of your choice */
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Style the box containing the login form */
+.login-box {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  margin: auto;
+}
+
+/* Style the app name box if you have one */
+.app-name-box {
+  display: flex;
+  justify-content: center; /* Centers content horizontally inside the box */
+  align-items: center; /* Centers content vertically inside the box */
+  text-align: center; /* Ensures text within is centered */
+  width: auto; /* It can grow or shrink according to the content */
+  padding: 0.5em 1em; /* Add padding around the text */
+  margin: 1em; /* Add some margin around the box */
+  background: #ffffff; /* Background color for the box */
+  border-radius: 20px; /* Rounded corners for the box */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds shadow for depth */
+}
+/* Style the logo container */
+.logo-box {
+  display: flex;
+  width: 75%;
+  justify-content: center;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Ensure the logo image does not exceed its container */
+.logo-box img {
+  max-width: 100%;
+  height: auto; /* This maintains the aspect ratio of the image */
+  margin-bottom: 1rem;
+}
+
+/* Style the buttons inside custom alert dialogs */
+.custom-alert .alert-button-inner {
+  color: black;
+  background-color: white;
+}
+
+/* Additional styles for input fields to match the design */
+ion-input {
+  --padding-start: 0; /* Remove padding if necessary */
+  --padding-end: 0;
+  --placeholder-color: #aaa; /* Placeholder text color */
+  --placeholder-font-style: italic;
+  --background: #f0f0f0;
+  --border-radius: 8px;
+  --border-style: none;
+  --placeholder-color: #8e8e8e;
+  --placeholder-opacity: 1;
+  --color: #000;
+  padding: 1rem;
+}
+
+/* Style the buttons according to the design */
+ion-button {
+  margin-top: 20px; /* Spacing between buttons and form fields */
+  --background: #fff; /* Button background color */
+  --color: #5271ff; /* Button text color */
+  --border-radius: 8px;
+}
+
+/* Ionic overrides to match your design */
+ion-item {
+  --background: transparent; /* Transparent background */
+  --padding-start: 0;
+  --inner-border-width: 0;
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+  --border-color: transparent; /* Hide the border */
+  --border-radius: 0; /* Remove border radius if you prefer square input fields */
+  margin-bottom: 1rem;
+}
+
+ion-label {
+  --color: #fff; /* Label color */
+  font-size: 1rem;
+}
+
+/* This is to style the back button if necessary */
+ion-back-button {
+  --color: #fff;
+}
+
+/* You might want to add styles for the header and title too */
+ion-header {
+  --background: transparent; /* Make header background transparent */
+  --border-color: transparent; /* Remove header border */
+}
+
+ion-title {
+  color: #5a131325; /* Title color */
+}
+
+.login-input {
+  background: #ffffff;
+  border: none;
+  border-radius: 25px;
+  margin-bottom: 1rem;
+  height: 3rem;
+  width: 100%;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+}
+
+.login-input::placeholder {
+  color: #1966cab9;
+}
+
+/* If you need the text to be responsive and scale based on the length */
+.app-name-box h1 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90vw; /* Prevent it from getting too wide on smaller screens */
+}
+
+@media (max-width: 600px) {
   .login-box {
-    background-color: #fff;
-    padding: 20px; 
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 80%; 
-    max-width: 500px; 
-    margin: auto; 
+    padding: 1rem;
   }
 
-  .app-name-box {
-    background-color: #ffff; 
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    color: #000000; 
-    margin-bottom: 20px; 
+  .app-name-box h1 {
+    font-size: smaller;
   }
-
-  .logo-box {
-    text-align: center;
-    margin-top: 20px; 
-  }
-  
-  .logo-box img {
-    max-width: 100%;
-  }
-  
-  .custom-alert .alert-button-inner {
-    color: black; 
-    background-color: white; 
-  }
+}

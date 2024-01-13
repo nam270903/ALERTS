@@ -56,6 +56,7 @@ const Login: React.FC = () => {
   };
 
   return (
+    
     <IonPage>
       <IonContent>
       <IonGrid className='ion-no-padding login-container'>
@@ -66,18 +67,25 @@ const Login: React.FC = () => {
 
           <IonCol size='12' size-md='8' size-lg='6'>
             <div className='app-name-box'>
-              <h1>ALERTS</h1>
+              <h1>Welcome back Anon</h1>
             </div>
 
             <div className='login-box'>
               <IonItem>
                 <IonLabel position='floating'>Username</IonLabel>
-                <IonInput type='text' value={username} onIonChange={(e) => setUsername(e.detail.value!)} />
+                <IonInput
+                  className='login-input' 
+                  type='text' 
+                  value={username} 
+                  onIonChange={(e) => setUsername(e.detail.value!)} />
               </IonItem>
 
               <IonItem>
                 <IonLabel position='floating'>Password</IonLabel>
-                <IonInput type={showPassword ? 'text' : 'password'} value={password} onIonChange={(e) => setPassword(e.detail.value!)} />
+                <IonInput 
+                  type={showPassword ? 'text' : 'password'} 
+                  value={password} 
+                  onIonChange={(e) => setPassword(e.detail.value!)} />
 
                 <IonButton slot='end' onClick={() => setShowPassword(!showPassword)}>
                   <IonIcon icon={showPassword ? eye : eyeOff} />
@@ -108,3 +116,49 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
+/*
+    <IonApp>
+      <IonPage>
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonBackButton text="" />
+            </IonButtons>
+            <IonTitle>Login</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          <div className="login-container">
+            <IonItem>
+              <IonLabel position="floating">Email</IonLabel>
+              <IonInput
+                type="email"
+                value={email}
+                onIonChange={(e) => setEmail(e.detail.value!)}
+              />
+            </IonItem>
+            <IonItem>
+              <IonLabel position="floating">Password</IonLabel>
+              <IonInput
+                type="password"
+                value={password}
+                onIonChange={(e) => setPassword(e.detail.value!)}
+              />
+            </IonItem>
+            <IonButton expand="block" onClick={handleLogin}>
+              Login
+            </IonButton>
+            <IonButton expand="block" color="light">
+              Login using Google
+            </IonButton>
+            <p className="register-link">
+              New to MyApp? <a href="/register">Register here</a>
+            </p>
+          </div>
+        </IonContent>
+      </IonPage>
+    </IonApp>
+
+
+*/

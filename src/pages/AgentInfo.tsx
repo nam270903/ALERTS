@@ -94,7 +94,7 @@ const AgentInfo: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (jwtToken) {
+    if (jwtToken && agent && typeof agent === 'object' && 'id' in agent) {
       const options = {
         method: 'GET',
         headers: {
@@ -171,7 +171,7 @@ const AgentInfo: React.FC = () => {
       AgentProcesses();
 
     }
-  }, [jwtToken, agent.id, RAMfree, RAMtotal]);
+  }, [jwtToken, agent?.id, RAMfree, RAMtotal]);
 
   useEffect(() => {
     updateRamChartData();
@@ -199,7 +199,7 @@ const AgentInfo: React.FC = () => {
                   <p><strong>Name:</strong></p>
                 </IonCol>
                 <IonCol size="6">
-                  <p>{agent.name}</p>
+                  <p>{agent?.name}</p>
                 </IonCol>
               </IonRow>
               <IonRow>
@@ -207,7 +207,7 @@ const AgentInfo: React.FC = () => {
                   <p><strong>ID:</strong></p>
                 </IonCol>
                 <IonCol size="6">
-                  <p>{agent.id}</p>
+                  <p>{agent?.id}</p>
                 </IonCol>
               </IonRow>
               <IonRow>
@@ -215,7 +215,7 @@ const AgentInfo: React.FC = () => {
                   <p><strong>IP Address:</strong></p>
                 </IonCol>
                 <IonCol size="6">
-                  <p>{agent.ip}</p>
+                  <p>{agent?.ip}</p>
                 </IonCol>
               </IonRow>
               <IonRow>
@@ -223,7 +223,7 @@ const AgentInfo: React.FC = () => {
                   <p><strong>Platform:</strong></p>
                 </IonCol>
                 <IonCol size="6">
-                  <p>{agent.platform}</p>
+                  <p>{agent?.platform}</p>
                 </IonCol>
               </IonRow>
               <IonRow>
@@ -231,7 +231,7 @@ const AgentInfo: React.FC = () => {
                   <p><strong>Cluster Node:</strong></p>
                 </IonCol>
                 <IonCol size="6">
-                  <p>{agent.node}</p>
+                  <p>{agent?.node}</p>
                 </IonCol>
               </IonRow>
               <IonRow>
@@ -239,7 +239,7 @@ const AgentInfo: React.FC = () => {
                   <p><strong>Status:</strong></p>
                 </IonCol>
                 <IonCol size="6">
-                  <p>{agent.status}</p>
+                  <p>{agent?.status}</p>
                 </IonCol>
               </IonRow>
               <IonRow>
