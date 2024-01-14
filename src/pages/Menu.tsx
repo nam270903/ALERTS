@@ -14,7 +14,7 @@ import {
   IonIcon,
 } from '@ionic/react';
 import { Redirect, Route } from 'react-router';
-import { notificationsOutline, appsOutline, logOutOutline } from 'ionicons/icons';  // Import the necessary Ionicons
+import { notificationsOutline, appsOutline, logOutOutline, settingsOutline } from 'ionicons/icons';
 import { useState } from 'react';
 
 import Notification from './Notification';
@@ -22,11 +22,13 @@ import Dashboard from './Dashboard';
 import AgentInfo from './AgentInfo';
 import NotificationInfo from './NotificationInfo';
 import LogoutAlert from './LogoutAlert';
+import Settings from './Settings'; 
 
 const Menu: React.FC = () => {
   const paths = [
     { name: 'Notification', url: '/app/Notification', icon: notificationsOutline },
     { name: 'Dashboard', url: '/app/Dashboard', icon: appsOutline },
+    { name: 'Settings', url: '/app/Settings', icon: settingsOutline}
   ];
   const [showLogoutAlert, setShowLogoutAlert] = useState(false);
 
@@ -76,8 +78,9 @@ const Menu: React.FC = () => {
           <Route exact path="/app/Notification" component={Notification} />
           <Route exact path="/app/Dashboard" component={Dashboard} />
           <Route exact path="/app/AgentInfo" component={AgentInfo} />
+          <Route exact path="/app/Settings" component={Settings}/>
           <Route exact path="/app/NotificationInfo" component={NotificationInfo} />
-          <Redirect to="/app/Notification" />
+            <Redirect to="/app/Notification" />
         </IonRouterOutlet>
       </IonSplitPane>
     </IonPage>

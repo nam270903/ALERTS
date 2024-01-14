@@ -67,7 +67,7 @@ const Login: React.FC = () => {
 
           <IonCol size='12' size-md='8' size-lg='6'>
             <div className='app-name-box'>
-              <h1>Welcome back Anon</h1>
+              <h1>Welcome back</h1>
             </div>
 
             <div className='login-box'>
