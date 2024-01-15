@@ -1,5 +1,8 @@
-.rounded-card {
-    border-radius: 15px; /* Adjust the radius as needed */
-    overflow: hidden;
-  }
+ion-button.ion-button {
+  margin-top: auto;
+  border-radius: 15px; 
+  background-color: rgb(255, 0, 0);
+  margin-bottom: 10px; 
+}
+
   

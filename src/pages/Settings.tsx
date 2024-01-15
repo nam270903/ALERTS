@@ -15,13 +15,18 @@ import {
   IonInput,
   IonButton,
   IonAlert,
+  IonIcon
 } from '@ionic/react';
+import LogoutAlert from './LogoutAlert';
+import { logOutOutline } from 'ionicons/icons';
+import './Settings.css';
 
 const Settings: React.FC = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [displayedPhoneNumber, setDisplayedPhoneNumber] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [inputSectionVisible, setInputSectionVisible] = useState(false);
+  const [showLogoutAlert, setShowLogoutAlert] = useState(false);
 
   const handlePhoneNumberChange = (event: any) => {
     const value = event.detail.value.replace(/[^0-9]/g, '');
@@ -42,6 +47,15 @@ const Settings: React.FC = () => {
 
   const handleSavePhoneNumber = () => {
     setInputSectionVisible(true);
+  };
+
+  const handleLogout = () => {
+    setShowLogoutAlert(true);
+  };
+
+  const confirmLogout = () => {
+    console.log('User has been logged out.');
+    setShowLogoutAlert(false);
   };
 
   return (
@@ -104,11 +118,18 @@ const Settings: React.FC = () => {
           buttons={['OK']}
         />
       </IonContent>
+
+      <IonButton className='ion-button'>
+        Sign out
+      </IonButton>
+
+      <LogoutAlert
+        isOpen={showLogoutAlert}
+        onDidDismiss={() => setShowLogoutAlert(false)}
+        onLogoutConfirmed={confirmLogout}
+      />
     </IonPage>
   );
 };
 
 export default Settings;
-
-
-
