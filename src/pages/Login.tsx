@@ -27,7 +27,7 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
-
+  
   const doLogin = () => {
     const form = new FormData();
     form.append("username", username);
@@ -116,49 +116,3 @@ const Login: React.FC = () => {
 };
 
 export default Login;
-
-/*
-    <IonApp>
-      <IonPage>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonBackButton text="" />
-            </IonButtons>
-            <IonTitle>Login</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent className="ion-padding">
-          <div className="login-container">
-            <IonItem>
-              <IonLabel position="floating">Email</IonLabel>
-              <IonInput
-                type="email"
-                value={email}
-                onIonChange={(e) => setEmail(e.detail.value!)}
-              />
-            </IonItem>
-            <IonItem>
-              <IonLabel position="floating">Password</IonLabel>
-              <IonInput
-                type="password"
-                value={password}
-                onIonChange={(e) => setPassword(e.detail.value!)}
-              />
-            </IonItem>
-            <IonButton expand="block" onClick={handleLogin}>
-              Login
-            </IonButton>
-            <IonButton expand="block" color="light">
-              Login using Google
-            </IonButton>
-            <p className="register-link">
-              New to MyApp? <a href="/register">Register here</a>
-            </p>
-          </div>
-        </IonContent>
-      </IonPage>
-    </IonApp>
-
-
-*/

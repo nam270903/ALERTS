@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ion-button.ion-button {
   margin-top: auto;
   border-radius: 15px; 
@@ -7,3 +8,9 @@ ion-button.ion-button {
 }
 
   
+=======
+.rounded-card {
+    border-radius: 15px; /* Adjust the radius as needed */
+    overflow: hidden;
+  }
+>>>>>>> Stashed changes

@@ -30,30 +30,42 @@ import '../main.css'
 
 const Settings: React.FC = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [displayedPhoneNumber, setDisplayedPhoneNumber] = useState('');
+  const [savedPhoneNumber, setSavedPhoneNumber] = useState('');
   const [showAlert, setShowAlert] = useState(false);
+<<<<<<< Updated upstream
   const [inputSectionVisible, setInputSectionVisible] = useState(false);
   const [showLogoutAlert, setShowLogoutAlert] = useState(false);
+=======
+  const [isEditing, setIsEditing] = useState(false);
+
+  const formatPhoneNumber = (value: string) => {
+    const numericValue = value.replace(/[^0-9]/g, '');
+
+    const formattedValue = numericValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+
+    return formattedValue;
+  };
+>>>>>>> Stashed changes
 
   const handlePhoneNumberChange = (event: any) => {
-    const value = event.detail.value.replace(/[^0-9]/g, '');
+    const value = formatPhoneNumber(event.detail.value);
     setPhoneNumber(value);
   };
 
-  const handleCheckPhoneNumber = () => {
-    const isValidPhoneNumber = /^\d{10}$/.test(phoneNumber);
+  const handleSave = () => {
+    const isValidPhoneNumber =  /^\d{3}-\d{3}-\d{4}$/.test(phoneNumber);
 
     if (!isValidPhoneNumber) {
       setShowAlert(true);
     } else {
-      setDisplayedPhoneNumber(phoneNumber);
+      setSavedPhoneNumber(phoneNumber);
       setPhoneNumber('');
-      setInputSectionVisible(false);
+      setIsEditing(false);
     }
   };
 
-  const handleSavePhoneNumber = () => {
-    setInputSectionVisible(true);
+  const handleUpdate = () => {
+    setIsEditing(true);
   };
 
   const handleLogout = () => {
@@ -108,38 +120,33 @@ const Settings: React.FC = () => {
         <IonCard>
           <IonCardContent>
             <IonGrid>
-              {inputSectionVisible && (
-                <IonRow>
-                  <IonCol size="8">
-                    <IonLabel position="stacked">New Number</IonLabel>
+              <IonRow className="ion-align-items-center">
+                <IonCol size="4">
+                  <IonLabel>IT Desk Helper Number:</IonLabel>
+                </IonCol>
+                <IonCol size="5">
+                  {isEditing ? (
                     <IonInput
                       type="tel"
+                      placeholder="Enter phone number"
                       value={phoneNumber}
                       onIonChange={handlePhoneNumberChange}
                     />
-                  </IonCol>
-                  <IonCol size="4" className="ion-text-center">
-                    <IonButton onClick={handleCheckPhoneNumber} color="primary" fill="solid">
+                  ) : (
+                    <IonLabel>{savedPhoneNumber}</IonLabel>
+                  )}
+                </IonCol>
+
+                <IonCol size="3">
+                  {isEditing ? (
+                    <IonButton onClick={handleSave} color="primary" fill="solid">
                       Save
                     </IonButton>
-                  </IonCol>
-                </IonRow>
-              )}
-
-              {displayedPhoneNumber && !inputSectionVisible && (
-                <IonRow className="ion-margin-top">
-                  <IonCol>
-                    <IonLabel>IT Desk Helper Number: </IonLabel>
-                    <IonLabel>{displayedPhoneNumber}</IonLabel>
-                  </IonCol>
-                </IonRow>
-              )}
-
-              <IonRow className="ion-margin-top">
-                <IonCol>
-                  <IonButton onClick={handleSavePhoneNumber} color="primary" fill="solid">
-                    Update
-                  </IonButton>
+                  ) : (
+                    <IonButton onClick={handleUpdate} color="primary" fill="solid">
+                      Update
+                    </IonButton>
+                  )}
                 </IonCol>
               </IonRow>
             </IonGrid>
@@ -152,7 +159,12 @@ const Settings: React.FC = () => {
           header="Invalid Number"
           subHeader="Please enter a valid phone number."
           message="Make sure the phone number has 10 digits and contains only numbers."
-          buttons={['OK']}
+          buttons={[
+            {
+              text:'OK',
+              cssClass: 'custom-alert'
+            }
+          ]}
         />
       </IonContent>
 
@@ -185,3 +197,7 @@ const Settings: React.FC = () => {
 };
 
 export default Settings;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
