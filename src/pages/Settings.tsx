@@ -27,15 +27,12 @@ import type { ToggleCustomEvent } from '@ionic/react';
 import './Settings.css';
 import '../main.css'
 
-
 const Settings: React.FC = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [savedPhoneNumber, setSavedPhoneNumber] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-<<<<<<< Updated upstream
   const [inputSectionVisible, setInputSectionVisible] = useState(false);
   const [showLogoutAlert, setShowLogoutAlert] = useState(false);
-=======
   const [isEditing, setIsEditing] = useState(false);
 
   const formatPhoneNumber = (value: string) => {
@@ -45,7 +42,6 @@ const Settings: React.FC = () => {
 
     return formattedValue;
   };
->>>>>>> Stashed changes
 
   const handlePhoneNumberChange = (event: any) => {
     const value = formatPhoneNumber(event.detail.value);
@@ -95,8 +91,11 @@ const Settings: React.FC = () => {
   useEffect(() => {
     const prefersDark = window.matchMedia('(prefers-color-scheme: light)');
 
+    // Initialize the dark theme based on the initial
+    // value of the prefers-color-scheme media query
     initializeDarkTheme(prefersDark.matches);
 
+    // Listen for changes to the prefers-color-scheme media query
     prefersDark.addEventListener('change', (mediaQuery) => initializeDarkTheme(mediaQuery.matches));
   }, []);
 
@@ -111,9 +110,9 @@ const Settings: React.FC = () => {
 
       <IonContent className="ion-padding">
         <IonCard>
-          <IonCardContent>
-            <IonGrid>
-              <IonRow className="ion-align-items-center">
+          <IonCardContent className="ion-text-center">
+        <IonGrid>
+          <IonRow className="ion-align-items-center">
                 <IonCol size="4">
                   <IonLabel>IT Desk Helper Number:</IonLabel>
                 </IonCol>
@@ -141,10 +140,6 @@ const Settings: React.FC = () => {
                     </IonButton>
                   )}
                 </IonCol>
-              </IonRow>
-            </IonGrid>
-          </IonCardContent>
-        </IonCard>
 
         <IonAlert
           isOpen={showAlert}
@@ -159,21 +154,27 @@ const Settings: React.FC = () => {
             }
           ]}
         />
-      </IonContent>
+        </IonRow>
+        </IonGrid>
+      </IonCardContent>
+    </IonCard>
 
-      <IonContent className="ion-padding ion-margin-top">
-        <IonCard>
-          <IonCardContent>
-            <IonGrid>
-              <IonList inset={true}>
-                <IonItem>
-                  <IonToggle checked={themeToggle} onIonChange={toggleChange} justify="space-between">Dark Mode</IonToggle>
-                </IonItem>
-              </IonList>
-            </IonGrid>
-          </IonCardContent>
-        </IonCard>
-      </IonContent>
+    <IonCard>
+  <IonCardContent className="ion-text-center">
+    <IonGrid>
+      <IonRow className="ion-align-items-center">
+        <IonCol size="4" className="ion-text-center">
+          <IonLabel>Dark Mode</IonLabel>
+        </IonCol>
+        <IonCol size="7" className="ion-text-right">
+          <IonList inset={true} className="toggle-list">
+            <IonToggle checked={themeToggle} onIonChange={toggleChange} justify="space-between" className="dark-mode-toggle" />
+          </IonList>
+        </IonCol>
+      </IonRow>
+    </IonGrid>
+  </IonCardContent>
+</IonCard>
 
 
       <IonButton onClick={handleLogout} expand="full">
@@ -184,13 +185,10 @@ const Settings: React.FC = () => {
       <LogoutAlert
         isOpen={showLogoutAlert}
         onDidDismiss={() => setShowLogoutAlert(false)}
-        onLogoutConfirmed={confirmLogout}/>
+        onLogoutConfirmed={confirmLogout}
+      />
     </IonPage>
   );
 };
 
 export default Settings;
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes

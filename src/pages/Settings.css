@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 ion-button.ion-button {
   margin-top: auto;
   border-radius: 15px; 
@@ -8,9 +7,26 @@ ion-button.ion-button {
 }
 
   
-=======
 .rounded-card {
     border-radius: 15px; /* Adjust the radius as needed */
     overflow: hidden;
   }
->>>>>>> Stashed changes
+
+  /* styles.css */
+
+.toggle-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dark-mode-toggle {
+  margin-left: auto; /* Allow the toggle to take available space */
+}
+
+.dark-mode-label {
+  margin-left: 10px; /* Add some spacing between the toggle and the label */
+}
+
+
+ 
