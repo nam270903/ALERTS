@@ -8,7 +8,7 @@ ion-button.ion-button {
 
   
 .rounded-card {
-    border-radius: 15px; /* Adjust the radius as needed */
+    border-radius: 15px; 
     overflow: hidden;
   }
 
@@ -21,11 +21,11 @@ ion-button.ion-button {
 }
 
 .dark-mode-toggle {
-  margin-left: auto; /* Allow the toggle to take available space */
+  margin-left: auto; 
 }
 
 .dark-mode-label {
-  margin-left: 10px; /* Add some spacing between the toggle and the label */
+  margin-left: 10px;
 }
 
 

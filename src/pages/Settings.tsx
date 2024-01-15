@@ -187,6 +187,7 @@ const Settings: React.FC = () => {
         onDidDismiss={() => setShowLogoutAlert(false)}
         onLogoutConfirmed={confirmLogout}
       />
+      </IonContent>
     </IonPage>
   );
 };
