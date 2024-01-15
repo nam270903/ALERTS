@@ -3,6 +3,7 @@ ion-button.ion-button {
   border-radius: 15px; 
   background-color: rgb(255, 0, 0);
   margin-bottom: 10px; 
+  display: flex;
 }
 
   
