@@ -11,6 +11,7 @@ import {
   IonItem,
   IonLabel,
   IonBadge,
+  IonCard,
 } from '@ionic/react';
 import ReactApexChart from 'react-apexcharts';
 import { NavLink, useHistory } from 'react-router-dom';
@@ -154,9 +155,12 @@ const Notification: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent class="ion-padding">
-        <ReactApexChart options={pieChartOptions} series={pieChartData} type="donut" height={350} />
 
+      <IonContent class="ion-padding">
+        
+        <IonCard>
+          <ReactApexChart options={pieChartOptions} series={pieChartData} type="donut" height={350} />
+        </IonCard>
         <IonList>
           {tableData.map((data, index) => (
             <IonItem key={index} lines="full" onClick={() => handleNotiClick(data)}>
