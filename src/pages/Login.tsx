@@ -64,11 +64,11 @@ const Login: React.FC = () => {
             <div className='logo-box'>
               <img src={Logo} alt='My Logo' />
             </div>
-
-          <IonCol size='12' size-md='8' size-lg='6'>
-            <div className='app-name-box'>
-              <h1>Welcome back</h1>
-            </div>
+          
+            <IonCol size='12' size-md='8' size-lg='6' className='ion-text-center'>
+            <div className='dark-overlay ion-padding'>
+              <h1>ALERTS</h1>
+              </div>
 
             <div className='login-box'>
               <IonItem>

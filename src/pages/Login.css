@@ -37,3 +37,9 @@
   color: black; 
   background-color: white; 
 }
+
+.dark-overlay {
+  background-color: white(0, 0, 0, 0.5);
+  padding: 10px; /* Add padding as needed */
+  color: black; 
+}

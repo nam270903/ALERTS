@@ -17,10 +17,11 @@ ADD (DONE) AT THE END WHENEVER WORKS ARE DONE !!!
  -
 
 * NOTIFICATION
- -
+ - token not found
 
 * WELCOME PAGE
  - 
 
 * LOGOUT
- - 
+ - cái này phần redirect vẫn bị bug này 
+   Log out quay về /app/Notification

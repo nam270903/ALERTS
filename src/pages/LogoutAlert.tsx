@@ -14,8 +14,8 @@ const LogoutAlert: React.FC<LogoutAlertProps> = ({ isOpen, onDidDismiss, onLogou
   const [redirectToLogin, setRedirectToLogin] = useState(false);
 
   useEffect(() => {
-    if (redirectToLogin) {
-      history.push('');
+    if (redirectToLogin) { 
+      history.push('');   
     }
   }, [redirectToLogin, history]);
 
