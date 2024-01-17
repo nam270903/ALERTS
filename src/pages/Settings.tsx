@@ -34,6 +34,8 @@ const Settings: React.FC = () => {
   const [inputSectionVisible, setInputSectionVisible] = useState(false);
   const [showLogoutAlert, setShowLogoutAlert] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [themeToggle, setThemeToggle] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const formatPhoneNumber = (value: string) => {
     const numericValue = value.replace(/[^0-9]/g, '');
@@ -73,30 +75,32 @@ const Settings: React.FC = () => {
     setShowLogoutAlert(false);
   };
 
-  const [themeToggle, setThemeToggle] = useState(false);
-
-  const toggleChange = (ev: ToggleCustomEvent) => {
-    toggleDarkTheme(ev.detail.checked);
-  };
-
-  const toggleDarkTheme = (shouldAdd: boolean) => {
-    document.body.classList.toggle('dark', shouldAdd);
-  };
-
-  const initializeDarkTheme = (isDark: boolean) => {
-    setThemeToggle(isDark);
-    toggleDarkTheme(isDark);
+  const toggleChange = () => {
+    const newDarkMode = !isDarkMode;
+    setIsDarkMode(newDarkMode);
+    document.body.classList.toggle('dark', newDarkMode);
   };
 
   useEffect(() => {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: light)');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-    // Initialize the dark theme based on the initial
-    // value of the prefers-color-scheme media query
-    initializeDarkTheme(prefersDark.matches);
+    const updateDarkMode = () => {
+      const newDarkMode = prefersDark.matches;
+      setIsDarkMode(newDarkMode);
+      document.body.classList.toggle('dark', newDarkMode);
+    };
 
-    // Listen for changes to the prefers-color-scheme media query
-    prefersDark.addEventListener('change', (mediaQuery) => initializeDarkTheme(mediaQuery.matches));
+    updateDarkMode();
+
+    const mediaQueryListener = () => {
+      updateDarkMode();
+    };
+
+    prefersDark.addEventListener('change', mediaQueryListener);
+
+    return () => {
+      prefersDark.removeEventListener('change', mediaQueryListener);
+    };
   }, []);
 
   return (
@@ -168,7 +172,7 @@ const Settings: React.FC = () => {
         </IonCol>
         <IonCol size="7" className="ion-text-right">
           <IonList inset={true} className="toggle-list">
-            <IonToggle checked={themeToggle} onIonChange={toggleChange} justify="space-between" className="dark-mode-toggle" />
+            <IonToggle checked={isDarkMode} onIonChange={toggleChange} justify="space-between" className="dark-mode-toggle" />
           </IonList>
         </IonCol>
       </IonRow>
