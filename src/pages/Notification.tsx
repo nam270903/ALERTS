@@ -158,9 +158,8 @@ const Notification: React.FC = () => {
 
       <IonContent class="ion-padding">
         
-        <IonCard>
           <ReactApexChart options={pieChartOptions} series={pieChartData} type="donut" height={350} />
-        </IonCard>
+
         <IonList>
           {tableData.map((data, index) => (
             <IonItem key={index} lines="full" onClick={() => handleNotiClick(data)}>
