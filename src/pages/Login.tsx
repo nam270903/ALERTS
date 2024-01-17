@@ -42,7 +42,7 @@ const Login: React.FC = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data && data.token) {
-            navigation.push('/app', 'forward', 'push');
+            navigation.push('/app/Notification', 'forward', 'push');
             console.log('User successfully logged in!');
             setAuthenticated(true);
           } else {

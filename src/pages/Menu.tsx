@@ -15,12 +15,13 @@ import {
 } from '@ionic/react';
 import { Redirect, Route } from 'react-router';
 import { notificationsOutline, appsOutline, settingsOutline } from 'ionicons/icons';
-
+import { useState, useEffect } from 'react';
 import Notification from './Notification';
 import Dashboard from './Dashboard';
 import AgentInfo from './AgentInfo';
 import NotificationInfo from './NotificationInfo';
 import Settings from './Settings'; 
+import Login from './Login';
 
 const Menu: React.FC = () => {
   const paths = [
@@ -58,7 +59,7 @@ const Menu: React.FC = () => {
           <Route exact path="/app/AgentInfo" component={AgentInfo} />
           <Route exact path="/app/Settings" component={Settings}/>
           <Route exact path="/app/NotificationInfo" component={NotificationInfo} />
-            <Redirect to="/app/Notification" />
+
         </IonRouterOutlet>
       </IonSplitPane>
     </IonPage>
