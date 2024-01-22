@@ -33,7 +33,7 @@
 }
 
 .logo-box img {
-  max-width: 100%;
+  max-width: 40%;
   animation: logoAnimation 1s ease-in-out forwards;
 }
 
