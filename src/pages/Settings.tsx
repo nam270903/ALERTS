@@ -56,6 +56,14 @@ const Settings: React.FC = () => {
     }
   };
 
+  const handlePhoneNumberClick = () => {
+    if (!isEditing && savedPhoneNumber) {
+      const phoneNumberWithoutDashes = savedPhoneNumber.replace(/-/g, '');
+      const telLink = `tel:${phoneNumberWithoutDashes}`;
+      window.location.href = telLink;
+    }
+  };
+
   const handleUpdate = () => {
     setIsEditing(true);
   };
@@ -122,7 +130,11 @@ const Settings: React.FC = () => {
                 <IonCol size="4">
                   <IonLabel>IT Desk Helper Number:</IonLabel>
                 </IonCol>
-                <IonCol size="5">
+                <IonCol
+                size="5"
+                onClick={handlePhoneNumberClick}
+                style={{ cursor: isEditing ? 'auto' : 'pointer' }}
+                >
                   {isEditing ? (
                     <IonInput
                       type="tel"
@@ -152,11 +164,6 @@ const Settings: React.FC = () => {
             </IonGrid>
           </IonCardContent>
         </IonCard>
-
-        <IonButton onClick={handleCall} color="primary" fill="solid" expand="full" className="call-button">
-          <IonIcon icon={callOutline} slot="start" />
-            Call
-          </IonButton>
 
         <IonCard>
           <IonCardContent className="ion-text-center">
