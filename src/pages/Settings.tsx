@@ -23,8 +23,6 @@ import {
 } from '@ionic/react';
 import LogoutAlert from './LogoutAlert';
 import { logOutOutline } from 'ionicons/icons';
-import type { ToggleCustomEvent } from '@ionic/react';
-import './Settings.css';
 import '../main.css'
 
 const Settings: React.FC = () => {
@@ -39,9 +37,7 @@ const Settings: React.FC = () => {
 
   const formatPhoneNumber = (value: string) => {
     const numericValue = value.replace(/[^0-9]/g, '');
-
     const formattedValue = numericValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-
     return formattedValue;
   };
 
@@ -51,7 +47,7 @@ const Settings: React.FC = () => {
   };
 
   const handleSave = () => {
-    const isValidPhoneNumber =  /^\d{3}-\d{3}-\d{4}$/.test(phoneNumber);
+    const isValidPhoneNumber = /^\d{3}-\d{3}-\d{4}$/.test(phoneNumber);
 
     if (!isValidPhoneNumber) {
       setShowAlert(true);
@@ -103,6 +99,14 @@ const Settings: React.FC = () => {
     };
   }, []);
 
+  const handlePhoneLabelClick = () => {
+    if (savedPhoneNumber) {
+      const phoneNumberWithoutDashes = savedPhoneNumber.replace(/-/g, '');
+      const telLink = `tel:${phoneNumberWithoutDashes}`;
+      window.location.href = telLink;
+    }
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -115,8 +119,8 @@ const Settings: React.FC = () => {
       <IonContent className="ion-padding">
         <IonCard>
           <IonCardContent className="ion-text-center">
-        <IonGrid>
-          <IonRow className="ion-align-items-center">
+            <IonGrid>
+              <IonRow className="ion-align-items-center">
                 <IonCol size="4">
                   <IonLabel>IT Desk Helper Number:</IonLabel>
                 </IonCol>
@@ -129,7 +133,9 @@ const Settings: React.FC = () => {
                       onIonChange={handlePhoneNumberChange}
                     />
                   ) : (
-                    <IonLabel>{savedPhoneNumber}</IonLabel>
+                    <IonLabel className="phone-number-label" onClick={handlePhoneLabelClick}>
+                      {savedPhoneNumber}
+                    </IonLabel>
                   )}
                 </IonCol>
 
@@ -144,6 +150,43 @@ const Settings: React.FC = () => {
                     </IonButton>
                   )}
                 </IonCol>
+              </IonRow>
+            </IonGrid>
+          </IonCardContent>
+        </IonCard>
+
+        <IonCard>
+          <IonCardContent className="ion-text-center">
+            <IonGrid>
+              <IonRow className="ion-align-items-center">
+                <IonCol size="4" className="ion-text-center">
+                  <IonLabel>Dark Mode</IonLabel>
+                </IonCol>
+                <IonCol size="7" className="ion-text-right">
+                  <IonList inset={true} className="toggle-list">
+                    <IonToggle
+                      checked={isDarkMode}
+                      onIonChange={toggleChange}
+                      justify="space-between"
+                      className="dark-mode-toggle"
+                    />
+                  </IonList>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </IonCardContent>
+        </IonCard>
+
+        <IonButton onClick={handleLogout} expand="full">
+          <IonIcon icon={logOutOutline} slot="start" />
+          Sign out
+        </IonButton>
+
+        <LogoutAlert
+          isOpen={showLogoutAlert}
+          onDidDismiss={() => setShowLogoutAlert(false)}
+          onLogoutConfirmed={confirmLogout}
+        />
 
         <IonAlert
           isOpen={showAlert}
@@ -153,44 +196,11 @@ const Settings: React.FC = () => {
           message="Make sure the phone number has 10 digits and contains only numbers."
           buttons={[
             {
-              text:'OK',
+              text: 'OK',
               cssClass: 'custom-alert'
             }
           ]}
         />
-        </IonRow>
-        </IonGrid>
-      </IonCardContent>
-    </IonCard>
-
-    <IonCard>
-  <IonCardContent className="ion-text-center">
-    <IonGrid>
-      <IonRow className="ion-align-items-center">
-        <IonCol size="4" className="ion-text-center">
-          <IonLabel>Dark Mode</IonLabel>
-        </IonCol>
-        <IonCol size="7" className="ion-text-right">
-          <IonList inset={true} className="toggle-list">
-            <IonToggle checked={isDarkMode} onIonChange={toggleChange} justify="space-between" className="dark-mode-toggle" />
-          </IonList>
-        </IonCol>
-      </IonRow>
-    </IonGrid>
-  </IonCardContent>
-</IonCard>
-
-
-      <IonButton onClick={handleLogout} expand="full">
-        <IonIcon icon={logOutOutline} slot="start" />
-          Sign out
-        </IonButton>
-
-      <LogoutAlert
-        isOpen={showLogoutAlert}
-        onDidDismiss={() => setShowLogoutAlert(false)}
-        onLogoutConfirmed={confirmLogout}
-      />
       </IonContent>
     </IonPage>
   );
