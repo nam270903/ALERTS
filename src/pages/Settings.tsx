@@ -6,6 +6,7 @@ import {
   IonTitle,
   IonContent,
   IonMenuButton,
+  IonButton,
   IonCard,
   IonCardContent,
   IonGrid,
@@ -13,17 +14,14 @@ import {
   IonCol,
   IonLabel,
   IonInput,
-  IonButton,
   IonAlert,
   IonIcon,
   IonToggle,
-  IonListHeader,
   IonList,
-  IonItem
 } from '@ionic/react';
 import LogoutAlert from './LogoutAlert';
-import { logOutOutline } from 'ionicons/icons';
-import '../main.css'
+import { logOutOutline, callOutline } from 'ionicons/icons';
+import '../main.css';
 
 const Settings: React.FC = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -99,7 +97,7 @@ const Settings: React.FC = () => {
     };
   }, []);
 
-  const handlePhoneLabelClick = () => {
+  const handleCall = () => {
     if (savedPhoneNumber) {
       const phoneNumberWithoutDashes = savedPhoneNumber.replace(/-/g, '');
       const telLink = `tel:${phoneNumberWithoutDashes}`;
@@ -111,7 +109,7 @@ const Settings: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonMenuButton slot='start' />
+          <IonMenuButton slot="start" />
           <IonTitle>SETTINGS</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -133,9 +131,9 @@ const Settings: React.FC = () => {
                       onIonChange={handlePhoneNumberChange}
                     />
                   ) : (
-                    <IonLabel className="phone-number-label" onClick={handlePhoneLabelClick}>
-                      {savedPhoneNumber}
-                    </IonLabel>
+                    <div className="ion-align-items-center">
+                      <IonLabel className="phone-number-label">{savedPhoneNumber}</IonLabel>
+                    </div>
                   )}
                 </IonCol>
 
@@ -154,6 +152,11 @@ const Settings: React.FC = () => {
             </IonGrid>
           </IonCardContent>
         </IonCard>
+
+        <IonButton onClick={handleCall} color="primary" fill="solid" expand="full" className="call-button">
+          <IonIcon icon={callOutline} slot="start" />
+            Call
+          </IonButton>
 
         <IonCard>
           <IonCardContent className="ion-text-center">
@@ -197,8 +200,8 @@ const Settings: React.FC = () => {
           buttons={[
             {
               text: 'OK',
-              cssClass: 'custom-alert'
-            }
+              cssClass: 'custom-alert',
+            },
           ]}
         />
       </IonContent>
