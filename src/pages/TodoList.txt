@@ -1,3 +1,0 @@
-Bug: 
-- Log out quay về /app/Notification -> Reload page log in sau khi log out quay về Notification
-- Bấm vào Setting thì Darkmode tự động bật

@@ -40,8 +40,11 @@ const Notification: React.FC = () => {
   const history = useHistory();
 
   const handleNotiClick = (data: Hit) => {
-    console.log('Clicked noti:', data);
-    history.push(`/app/NotificaionInfo`, { data });
+    console.log('Data tobe pushed:', data);
+    history.push({
+      pathname: `/app/NotificationInfo`,
+      state: { data },
+    });
   };
 
   const handleFilterChange = (event: CustomEvent) => {

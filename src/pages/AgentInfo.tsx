@@ -15,7 +15,7 @@ import {
   IonBackButton
 } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
-import { useLocation, useHistory, useParams } from 'react-router-dom';
+import { useLocation} from 'react-router-dom';
 import { Agent } from './Dashboard';
 import './Agentinfo.css';
 import ReactApexChart from 'react-apexcharts';
