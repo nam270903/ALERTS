@@ -42,10 +42,34 @@ const NotificationInfo: React.FC = () => {
               <IonGrid>
                 <IonRow>
                   <IonCol size="6">
-                    <p><strong>AgentID:</strong></p>
+                    <p><strong>Level:</strong></p>
+                  </IonCol>
+                  <IonCol size="6">
+                    <p>{data.level}</p>
+                  </IonCol>
+                </IonRow>
+                <IonRow>
+                  <IonCol size="6">
+                    <p><strong>Agent ID:</strong></p>
                   </IonCol>
                   <IonCol size="6">
                     <p>{data.agentId}</p>
+                  </IonCol>
+                </IonRow>
+                <IonRow>
+                  <IonCol size="6">
+                    <p><strong>Agent name:</strong></p>
+                  </IonCol>
+                  <IonCol size="6">
+                    <p>{data.name}</p>
+                  </IonCol>
+                </IonRow>
+                <IonRow>
+                  <IonCol size="6">
+                    <p><strong>IP address:</strong></p>
+                  </IonCol>
+                  <IonCol size="6">
+                    <p>{data.ip}</p>
                   </IonCol>
                 </IonRow>
                 <IonRow>
@@ -54,6 +78,14 @@ const NotificationInfo: React.FC = () => {
                   </IonCol>
                   <IonCol size="6">
                     <p>{data.timestamp}</p>
+                  </IonCol>
+                </IonRow>
+                <IonRow>
+                  <IonCol size="6">
+                    <p><strong>Location:</strong></p>
+                  </IonCol>
+                  <IonCol size="6">
+                    <p>{data.location}</p>
                   </IonCol>
                 </IonRow>
                 <IonRow>
@@ -72,14 +104,7 @@ const NotificationInfo: React.FC = () => {
                     <p>{data.description}</p>
                   </IonCol>
                 </IonRow>
-                <IonRow>
-                  <IonCol size="6">
-                    <p><strong>Level:</strong></p>
-                  </IonCol>
-                  <IonCol size="6">
-                    <p>{data.level}</p>
-                  </IonCol>
-                </IonRow>
+
               </IonGrid>
             </IonLabel>
           </IonCardContent>

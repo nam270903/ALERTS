@@ -22,7 +22,10 @@ export interface Hit {
   _source: {
     agent: {
       id: string;
+      ip: string;
+      name: string;
     };
+    location: string;
     timestamp: string;
     full_log: string;
     rule: {
@@ -100,10 +103,13 @@ const Notification: React.FC = () => {
 
             const extractedData = hits.map((hit) => ({
               agentId: hit._source.agent.id,
+              ip: hit._source.agent.ip,
+              name: hit._source.agent.name,
               timestamp: hit._source.timestamp,
               fullLog: hit._source.full_log,
               description: hit._source.rule.description,
               level: hit._source.rule.level,
+              location: hit._source.location,
             }));
 
             const filteredData = filterLevel
