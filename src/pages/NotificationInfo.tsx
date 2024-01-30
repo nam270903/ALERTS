@@ -1,5 +1,18 @@
 import React from 'react';
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonLabel } from '@ionic/react';
+import { 
+  IonPage, 
+  IonHeader, 
+  IonToolbar, 
+  IonButtons, 
+  IonBackButton, 
+  IonTitle, 
+  IonContent, 
+  IonCard, 
+  IonCardContent, 
+  IonGrid, 
+  IonRow, 
+  IonCol, 
+  IonLabel } from '@ionic/react';
 import { useLocation } from 'react-router-dom';
 
 const NotificationInfo: React.FC = () => {
@@ -40,6 +53,7 @@ const NotificationInfo: React.FC = () => {
             <IonLabel>
               <h1 className='ion-text-center'>Notification Information</h1>
               <IonGrid>
+
                 <IonRow>
                   <IonCol size="6">
                     <p><strong>Level:</strong></p>
@@ -48,6 +62,7 @@ const NotificationInfo: React.FC = () => {
                     <p>{data.level}</p>
                   </IonCol>
                 </IonRow>
+
                 <IonRow>
                   <IonCol size="6">
                     <p><strong>Agent ID:</strong></p>
@@ -56,6 +71,7 @@ const NotificationInfo: React.FC = () => {
                     <p>{data.agentId}</p>
                   </IonCol>
                 </IonRow>
+
                 <IonRow>
                   <IonCol size="6">
                     <p><strong>Agent name:</strong></p>
@@ -64,6 +80,7 @@ const NotificationInfo: React.FC = () => {
                     <p>{data.name}</p>
                   </IonCol>
                 </IonRow>
+
                 <IonRow>
                   <IonCol size="6">
                     <p><strong>IP address:</strong></p>
@@ -72,14 +89,25 @@ const NotificationInfo: React.FC = () => {
                     <p>{data.ip}</p>
                   </IonCol>
                 </IonRow>
+
                 <IonRow>
                   <IonCol size="6">
-                    <p><strong>Timestamp:</strong></p>
+                    <p><strong>Date:</strong></p>
                   </IonCol>
                   <IonCol size="6">
-                    <p>{data.timestamp}</p>
+                    <p>{new Date(data.timestamp).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })}</p>
                   </IonCol>
                 </IonRow>
+
+                <IonRow>
+                  <IonCol size="6">
+                    <p><strong>Time:</strong></p>
+                  </IonCol>
+                  <IonCol size="6">
+                    <p>{new Date(data.timestamp).toLocaleTimeString('en-US', { timeZoneName: 'short' })}</p>
+                  </IonCol>
+                </IonRow>
+
                 <IonRow>
                   <IonCol size="6">
                     <p><strong>Location:</strong></p>
@@ -88,6 +116,7 @@ const NotificationInfo: React.FC = () => {
                     <p>{data.location}</p>
                   </IonCol>
                 </IonRow>
+
                 <IonRow>
                   <IonCol size="6">
                     <p><strong>Full Log:</strong></p>
@@ -96,6 +125,7 @@ const NotificationInfo: React.FC = () => {
                     <p>{data.fullLog}</p>
                   </IonCol>
                 </IonRow>
+
                 <IonRow>
                   <IonCol size="6">
                     <p><strong>Description:</strong></p>
